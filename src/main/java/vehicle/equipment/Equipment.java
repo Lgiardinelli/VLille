@@ -1,4 +1,6 @@
 package vehicle.equipment;
 
-public class Equipment {
+import vehicle.Vehicle;
+
+public class Equipment extends Vehicle {
 }
