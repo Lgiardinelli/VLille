@@ -5,12 +5,16 @@ package vehicle.stateVehicle;
  */
 public class Robed implements StateVehicle{
 
+    @Override
     public void toService(){};
 
+    @Override
     public void toHS(){};
 
+    @Override
     public void toRobed(){};
 
+    @Override
     public boolean isRentable(){
         return false;
     };
