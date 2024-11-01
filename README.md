@@ -10,3 +10,4 @@ Squelette de certaines classes
 - ajout squelette et doc pour les vehicles 
 - ajout squelette et doc pour les Creators 
 - ajout squelette et doc pour les VehicleVisitor
+- ajout squelette et doc pour les Equipments
