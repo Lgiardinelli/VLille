@@ -3,6 +3,9 @@ package station.stationVisitor;
 import station.Station;
 import vehicle.Vehicle;
 
+/**
+ * Visor Thief Class
+ */
 public class Rober implements StationVisitor {
 
     /**
