@@ -8,7 +8,7 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 /**
  * class that handles the different types of vehicle
  */
-public class Vehicle {
+public abstract class Vehicle {
     private int id;
     private Station station;
     private int nbTimeRented;
@@ -64,7 +64,7 @@ public class Vehicle {
     /**
      * method that allows to decorate our vehicle with different equipment
      */
-    public void decorateEquipment(){}
+    public abstract void decorateEquipment();
 
     /**
      * method that checks whether the object accepts the visitor
@@ -98,4 +98,6 @@ public class Vehicle {
     public void setState(StateVehicle state) {
         this.state = state;
     }
+
+
 }
