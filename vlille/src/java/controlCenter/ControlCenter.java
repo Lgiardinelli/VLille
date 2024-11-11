@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Control center classControl center class
  */
-public class ControlCenter {
+public class ControlCenter implements SubscribeControlCenter {
 
     private List<Station<Vehicle>> stations;
     private List<Vehicle> vehicles;
@@ -39,6 +39,26 @@ public class ControlCenter {
      * Execute the strategy
      */
     public void executeStrategy() {
+
+    }
+
+    @Override
+    public void  notifyStationEmpty(Station s) {
+
+    }
+
+    @Override
+    public void notifyStationFull(Station s) {
+
+    }
+
+    @Override
+    public void notifyStationVehicleAdded(Station s) {
+
+    }
+
+    @Override
+    public void notifyStationVehicleTaked(Station s) {
 
     }
 }
