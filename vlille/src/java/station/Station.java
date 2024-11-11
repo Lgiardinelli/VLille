@@ -49,19 +49,20 @@ public class Station <T> {
     }
 
     /**
-     * Add parameter vehicle to station vehicle list
+     * Add a vehicle to the station
      * @param vehicle - The vehicle to be added
      */
-    public void addVehicle(Vehicle vehicle) {
+    public void DropOffVehicle(Vehicle vehicle) {
 
     }
 
     /**
-     * TODO
+     * take a vehicle from the station if possible
      * @param vehicle - The rental vehicle
      */
     public void rentVehicle(Vehicle vehicle) {
     }
+
 
     /**
      * Accept or reject visitors to the station
