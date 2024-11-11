@@ -40,7 +40,6 @@
                     <targetTests>
                         <param>vlille.test.java.*</param>
                     </targetTests>
-                    <testPlugin>junit5</testPlugin>
                 </configuration>
             </plugin>
         </plugins>
