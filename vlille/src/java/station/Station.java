@@ -1,7 +1,11 @@
 package station;
 
+import exeption.NoVehicleOfThisTypeExeption;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
+import station.stateTypeVehicleToRent.StateTypeVehicleToRent;
+import station.stateTypeVehicleToRent.TakeBikeState;
+import station.stateTypeVehicleToRent.TakeScooterState;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -11,13 +15,14 @@ import java.util.List;
 /**
  * Class to manage stations
  */
-public class Station <T> {
+public class Station{
 
     private static int incrId = 0;
     private final int id;
-    private final List<T> vehicles;
+    private final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
+    private StateTypeVehicleToRent stateTypeVehicleToRent;
 
     /**
      * Constructor Station
@@ -27,6 +32,7 @@ public class Station <T> {
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
         this.stateStation = new Empty();
+        this.stateTypeVehicleToRent = new TakeBikeState(this);
     }
 
     /**
@@ -55,9 +61,10 @@ public class Station <T> {
 
     /**
      * TODO
-     * @param vehicle - The rental vehicle
+     * @throws NoVehicleOfThisTypeExeption - if there is no vehicle of this type
      */
-    public void rentVehicle(Vehicle vehicle) {
+    public Vehicle rentVehicle() throws NoVehicleOfThisTypeExeption {
+        return this.stateTypeVehicleToRent.takeVehicle();
     }
 
     /**
@@ -119,5 +126,32 @@ public class Station <T> {
         return false;
     }
 
+    /**
+     * setter for the setStateTypeVehicleToRent
+     * @param stateTypeVehicleToRent
+     */
+    public void setStateTypeVehicleToRent(StateTypeVehicleToRent stateTypeVehicleToRent) {
+        this.stateTypeVehicleToRent = stateTypeVehicleToRent;
+    }
 
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+
+    public void toTakeOverBoard() {
+        this.stateTypeVehicleToRent.toTakeOverBoard();
+    }
+
+
+    public void toTakeBike() {
+        this.stateTypeVehicleToRent.toTakeBike();
+
+    }
+
+
+    public void toTakeScooter() {
+        this.stateTypeVehicleToRent.toTakeScooter();
+
+    }
 }
