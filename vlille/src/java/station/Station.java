@@ -1,5 +1,6 @@
 package station;
 
+import controlCenter.ControlCenter;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
 import station.stationVisitor.StationVisitor;
@@ -18,6 +19,7 @@ public class Station <T> {
     private final List<T> vehicles;
     private final int capacityMax;
     private StateStation stateStation;
+    private final List<ControlCenter> subsribers;
 
     /**
      * Constructor Station
@@ -27,6 +29,7 @@ public class Station <T> {
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
         this.stateStation = new Empty();
+        this.subsribers = new ArrayList<>();
     }
 
     /**
@@ -117,6 +120,21 @@ public class Station <T> {
      */
     public boolean canBeRent() {
         return false;
+    }
+
+    /**
+     * Add a subscriber to the station
+     * @param controlCenter a subscriber
+     */
+    public void addSubscriber(ControlCenter controlCenter) {
+    }
+
+    /**
+     * Remove a subscriber from the station
+     * @param controlCenter a subscriber
+     */
+    public void removeSubscriber(ControlCenter controlCenter) {
+
     }
 
 
