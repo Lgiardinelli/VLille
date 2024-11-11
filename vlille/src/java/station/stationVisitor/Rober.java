@@ -20,7 +20,7 @@ public class Rober implements StationVisitor {
      * @param station - Station<Vehicle> The station visited
      */
     @Override
-    public void visit(Station<Vehicle> station) {
+    public void visit(Station station) {
 
     }
 
@@ -28,7 +28,7 @@ public class Rober implements StationVisitor {
      * Steal the vehicle from the station
      * @param station - The stolen station
      */
-    private void robStation(Station<Vehicle> station){
+    private void robStation(Station station){
 
     }
 
