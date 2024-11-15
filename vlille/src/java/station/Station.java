@@ -3,9 +3,8 @@ package station;
 import exeption.NoVehicleOfThisTypeExeption;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
-import station.stateTypeVehicleToRent.StateTypeVehicleToRent;
-import station.stateTypeVehicleToRent.TakeBikeState;
-import station.stateTypeVehicleToRent.TakeScooterState;
+import station.stateTypeVehicleToRent.VehicleTypeChooser;
+import station.stateTypeVehicleToRent.VehicleTypeBike;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -22,7 +21,7 @@ public class Station{
     private final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
-    private StateTypeVehicleToRent stateTypeVehicleToRent;
+    private VehicleTypeChooser vehicleTypeChooser;
 
     /**
      * Constructor Station
@@ -32,7 +31,7 @@ public class Station{
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
         this.stateStation = new Empty();
-        this.stateTypeVehicleToRent = new TakeBikeState(this);
+        this.vehicleTypeChooser = new VehicleTypeBike(this);
     }
 
     /**
@@ -64,7 +63,7 @@ public class Station{
      * @throws NoVehicleOfThisTypeExeption - if there is no vehicle of this type
      */
     public Vehicle rentVehicle() throws NoVehicleOfThisTypeExeption {
-        return this.stateTypeVehicleToRent.takeVehicle();
+        return this.vehicleTypeChooser.takeVehicle();
     }
 
     /**
@@ -128,10 +127,10 @@ public class Station{
 
     /**
      * setter for the setStateTypeVehicleToRent
-     * @param stateTypeVehicleToRent
+     * @param vehicleTypeChooser
      */
-    public void setStateTypeVehicleToRent(StateTypeVehicleToRent stateTypeVehicleToRent) {
-        this.stateTypeVehicleToRent = stateTypeVehicleToRent;
+    public void setStateTypeVehicleToRent(VehicleTypeChooser vehicleTypeChooser) {
+        this.vehicleTypeChooser = vehicleTypeChooser;
     }
 
     public List<Vehicle> getVehicles() {
@@ -140,18 +139,18 @@ public class Station{
 
 
     public void toTakeOverBoard() {
-        this.stateTypeVehicleToRent.toTakeOverBoard();
+        this.vehicleTypeChooser.toTakeOverBoard();
     }
 
 
     public void toTakeBike() {
-        this.stateTypeVehicleToRent.toTakeBike();
+        this.vehicleTypeChooser.toTakeBike();
 
     }
 
 
     public void toTakeScooter() {
-        this.stateTypeVehicleToRent.toTakeScooter();
+        this.vehicleTypeChooser.toTakeScooter();
 
     }
 }

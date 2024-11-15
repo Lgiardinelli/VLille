@@ -4,28 +4,34 @@ import exeption.NoVehicleOfThisTypeExeption;
 import station.Station;
 import vehicle.Vehicle;
 
-public abstract class StateTypeVehicleToRent {
+public abstract class VehicleTypeChooser {
 
     protected Station station;
 
-    public StateTypeVehicleToRent(Station station) {
+    public VehicleTypeChooser(Station station) {
         this.station = station;
     }
 
     /**
      * Changes the state to take a bike
      */
-    public abstract void toTakeBike();
+    public final void toTakeBike(){
+        this.station.setStateTypeVehicleToRent(new VehicleTypeOverBoard(this.station));
+    }
 
     /**
      * Changes the state to take a scooter
      */
-    public abstract void toTakeScooter();
+    public final void toTakeScooter(){
+        this.station.setStateTypeVehicleToRent(new VehicleTypeScooter(this.station));
+    }
 
     /**
      * Changes the state to take an overboard
      */
-    public abstract void toTakeOverBoard();
+    public final void toTakeOverBoard(){
+        this.station.setStateTypeVehicleToRent(new VehicleTypeOverBoard(this.station));
+    }
 
     /**
      * Takes a vehicle from the station and returns it
