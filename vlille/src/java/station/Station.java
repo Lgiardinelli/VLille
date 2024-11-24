@@ -50,7 +50,7 @@ public class Station{
      * Private method that creates a maximum vehicle capacity for each station
      * @return int - Between 10 to 20 vehicle capacity
      */
-    private int randomCapacityMax() {
+    protected int randomCapacityMax() {
         return 0;
     }
 
@@ -82,27 +82,26 @@ public class Station{
     /**
      * Changes vacuum station status
      */
-    public void toEmpty() {
+    private void toEmpty() {
     }
 
     /**
      * Changes station state to 1 vehicle remaining
      */
-    public void toOneVehicleLeft() {
+    private void toOneVehicleLeft() {
 
     }
 
     /**
      * Changes station state to Normal
      */
-    public void toNormal() {
+    private void toNormal() {
     }
 
     /**
      * Changes station vehicle to full
      */
-    public void toFull() {
-
+    private void toFull() {
     }
 
     /**
@@ -171,5 +170,9 @@ public class Station{
     public void toTakeScooter() {
         this.vehicleTypeChooser.toTakeScooter();
 
+    }
+
+    public Vehicle getVehicle(){
+        return this.vehicles.getFirst();
     }
 }
