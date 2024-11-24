@@ -4,7 +4,7 @@ import controlCenter.ControlCenter;
 import exeption.NoVehicleOfThisTypeExeption;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
-import station.vehicleTypeChooser.TypeVehicleTest;
+import station.stationVisitor.TypeVehicleTest;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -82,7 +82,7 @@ public class Station{
     }
 
     /**
-     * Changes vacuum station status
+     * Change station state to empty
      */
     private void toEmpty() {
     }
@@ -123,7 +123,7 @@ public class Station{
     }
 
     /**
-     * can the station rent vehicle
+     * can the station rent any type of vehicle
      * return boolean - true or false
      */
     public boolean canBeRent() {

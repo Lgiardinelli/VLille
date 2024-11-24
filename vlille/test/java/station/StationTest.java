@@ -68,5 +68,12 @@ class StationTest {
         assertThrows(Exception.class,()-> this.station.getVehicle());
     }
 
-
+    @Test
+    void testCanBeRobbed(){
+        this.station.getVehicles().add(this.overBoard);
+        this.station.getVehicles().add(this.bike);
+        assertFalse(this.station.canBeRobed());
+        this.station.getVehicle();
+        assertTrue(this.station.canBeRobed());
+    }
 }

@@ -1,4 +1,4 @@
-package station.vehicleTypeChooser;
+package station.stationVisitor;
 
 import vehicle.Vehicle;
 

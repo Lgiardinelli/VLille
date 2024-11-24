@@ -1,17 +1,11 @@
 package station.stationVisitor;
 
-import exeption.NoVehicleOfThisTypeExeption;
-import station.Station;
 import vehicle.Overboard;
-import vehicle.Scooter;
 
-public class ScooterVisitor implements StationVisitor{
+public class ScooterVisitor extends GetVehicleVisitor{
+
     @Override
-    public void visit(Station station) {
-        try {
-            station.rentVehicle(v -> v instanceof Scooter);
-        } catch (NoVehicleOfThisTypeExeption e) {
-            System.out.println(e);
-        }
+    protected TypeVehicleTest testMethod() {
+        return v -> v instanceof Overboard;
     }
 }
