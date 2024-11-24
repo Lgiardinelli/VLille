@@ -5,8 +5,8 @@ import exeption.NoVehicleOfThisTypeExeption;
 import exeption.NoVehicleOfThisTypeExeption;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
-import station.stateTypeVehicleToRent.VehicleTypeChooser;
-import station.stateTypeVehicleToRent.VehicleTypeBike;
+import station.vehicleTypeChooser.VehicleTypeChooser;
+import station.vehicleTypeChooser.VehicleTypeBike;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
