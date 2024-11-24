@@ -11,6 +11,6 @@ public interface StationVisitor {
      * method which allows you to visit the station
      * @param station - Station<Vehicle> la station visité
      */
-    void visit(Station<Vehicle> station);
+    void visit(Station station);
 
 }

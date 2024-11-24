@@ -1,8 +1,12 @@
 package station;
 
 import controlCenter.ControlCenter;
+import exeption.NoVehicleOfThisTypeExeption;
+import exeption.NoVehicleOfThisTypeExeption;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
+import station.vehicleTypeChooser.VehicleTypeChooser;
+import station.vehicleTypeChooser.VehicleTypeBike;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -12,13 +16,14 @@ import java.util.List;
 /**
  * Class to manage stations
  */
-public class Station <T> {
+public class Station{
 
     private static int incrId = 0;
     private final int id;
-    private final List<T> vehicles;
+    private final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
+    private VehicleTypeChooser vehicleTypeChooser;
     private final List<ControlCenter> subsribers;
 
     /**
@@ -29,6 +34,7 @@ public class Station <T> {
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
         this.stateStation = new Empty();
+        this.vehicleTypeChooser = new VehicleTypeBike(this);
         this.subsribers = new ArrayList<>();
     }
 
@@ -58,11 +64,11 @@ public class Station <T> {
 
     /**
      * take a vehicle from the station if possible
-     * @param vehicle - The rental vehicle
+     *  @throws NoVehicleOfThisTypeExeption - if there is no vehicle of this type
      */
-    public void rentVehicle(Vehicle vehicle) {
+    public Vehicle rentVehicle() throws NoVehicleOfThisTypeExeption {
+        return this.vehicleTypeChooser.takeVehicle();
     }
-
 
     /**
      * Accept or reject visitors to the station
@@ -124,6 +130,29 @@ public class Station <T> {
     }
 
     /**
+     * setter for the setStateTypeVehicleToRent
+     * @param vehicleTypeChooser
+     */
+    public void setStateTypeVehicleToRent(VehicleTypeChooser vehicleTypeChooser) {
+        this.vehicleTypeChooser = vehicleTypeChooser;
+    }
+
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+
+    public void toTakeOverBoard() {
+        this.vehicleTypeChooser.toTakeOverBoard();
+    }
+
+
+    public void toTakeBike() {
+        this.vehicleTypeChooser.toTakeBike();
+
+    }
+
+    /**
      * Add a subscriber to the station
      * @param controlCenter a subscriber
      */
@@ -139,4 +168,8 @@ public class Station <T> {
     }
 
 
+    public void toTakeScooter() {
+        this.vehicleTypeChooser.toTakeScooter();
+
+    }
 }

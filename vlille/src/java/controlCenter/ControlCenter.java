@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ControlCenter implements SubscribeControlCenter {
 
-    private List<Station<Vehicle>> stations;
+    private List<Station> stations;
     private List<Vehicle> vehicles;
     private RedistributionStrategy strategy;
 
