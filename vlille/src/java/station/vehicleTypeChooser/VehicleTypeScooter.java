@@ -1,4 +1,4 @@
-package station.stateTypeVehicleToRent;
+package station.vehicleTypeChooser;
 
 import station.Station;
 import vehicle.Scooter;

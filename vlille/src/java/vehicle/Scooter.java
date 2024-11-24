@@ -11,4 +11,5 @@ public class Scooter extends Vehicle {
     public Scooter() {
         super();
     }
+    
 }

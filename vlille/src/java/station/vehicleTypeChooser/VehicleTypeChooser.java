@@ -1,4 +1,4 @@
-package station.stateTypeVehicleToRent;
+package station.vehicleTypeChooser;
 
 import exeption.NoVehicleOfThisTypeExeption;
 import station.Station;
