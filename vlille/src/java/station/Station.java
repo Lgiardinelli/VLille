@@ -1,7 +1,7 @@
 package station;
 
 import controlCenter.ControlCenter;
-import exeption.NoVehicleOfThisTypeExeption;
+import exeption.NoVehicleOfThisTypeAvailableException;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
 import station.stationVisitor.TypeVehicleTest;
@@ -60,16 +60,16 @@ public class Station{
 
     /**
      * take a vehicle from the station if possible
-     *  @throws NoVehicleOfThisTypeExeption - if there is no vehicle of this type
+     *  @throws NoVehicleOfThisTypeAvailableException - if there is no vehicle of this type
      */
-    public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeExeption {
+    public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeAvailableException {
         for(Vehicle vehicle : this.getVehicles()){
             if(t.testTypeVehicle(vehicle) && vehicle.isRentable()){
                 this.getVehicles().remove(vehicle);
                 return vehicle;
             }
         }
-        throw new NoVehicleOfThisTypeExeption("No vehicle of this type in the station");
+        throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
     }
 
     /**
