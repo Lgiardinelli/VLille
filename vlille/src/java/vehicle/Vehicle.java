@@ -55,10 +55,9 @@ public abstract class Vehicle {
 
     /**
      * a setter for the nbTimeRented attribute
-     * @param nbTimeRented an int
      */
-    public void setNbTimeRented(int nbTimeRented) {
-        this.nbTimeRented = nbTimeRented;
+    public void addOneNbTimeRented() {
+        this.nbTimeRented += 1;
     }
 
     /**
