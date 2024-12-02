@@ -29,6 +29,18 @@ public class ControlCenter implements SubscribeControlCenter {
     }
 
     /**
+     * ControlCenter's constructor with a non-empty list en predefine station
+     */
+    public ControlCenter(List<Station> s){
+        this.stations = new HashMap<>();
+        this.vehicles = new ArrayList<>();
+        this.strategy = new RedistributionRobin();
+        if(!s.isEmpty()) {
+            s.forEach(t -> this.stations.put(t, 0));
+        }
+    }
+
+    /**
      * Change strategy
      * @param strategy - new Strategy
      */
@@ -87,4 +99,10 @@ public class ControlCenter implements SubscribeControlCenter {
     public void notifyStationVehicleTaked(Station s) {
 
     }
+
+    public void addStationInitToTheMap(Station s){
+        this.stations.putIfAbsent(s,0);
+    }
+
+
 }
