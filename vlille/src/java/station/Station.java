@@ -18,9 +18,11 @@ public class Station{
 
     private static int incrId = 0;
     private final int id;
-    private final List<Vehicle>vehicles;
+    protected final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
+    private VehicleTypeChooser vehicleTypeChooser;
+    protected final List<ControlCenter> subsribers;
     private final List<ControlCenter> subsribers;
 
     /**
