@@ -1,12 +1,10 @@
 package station;
 
 import controlCenter.ControlCenter;
-import exeption.NoVehicleOfThisTypeExeption;
-import exeption.NoVehicleOfThisTypeExeption;
+import exeption.NoVehicleOfThisTypeAvailableException;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
-import station.vehicleTypeChooser.VehicleTypeChooser;
-import station.vehicleTypeChooser.VehicleTypeBike;
+import station.stationVisitor.TypeVehicleTest;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -23,7 +21,6 @@ public class Station{
     private final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
-    private VehicleTypeChooser vehicleTypeChooser;
     private final List<ControlCenter> subsribers;
 
     /**
@@ -34,7 +31,6 @@ public class Station{
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
         this.stateStation = new Empty();
-        this.vehicleTypeChooser = new VehicleTypeBike(this);
         this.subsribers = new ArrayList<>();
     }
 
@@ -50,7 +46,7 @@ public class Station{
      * Private method that creates a maximum vehicle capacity for each station
      * @return int - Between 10 to 20 vehicle capacity
      */
-    private int randomCapacityMax() {
+    protected int randomCapacityMax() {
         return 0;
     }
 
@@ -64,10 +60,16 @@ public class Station{
 
     /**
      * take a vehicle from the station if possible
-     *  @throws NoVehicleOfThisTypeExeption - if there is no vehicle of this type
+     *  @throws NoVehicleOfThisTypeAvailableException - if there is no vehicle of this type
      */
-    public Vehicle rentVehicle() throws NoVehicleOfThisTypeExeption {
-        return this.vehicleTypeChooser.takeVehicle();
+    public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeAvailableException {
+        for(Vehicle vehicle : this.getVehicles()){
+            if(t.testTypeVehicle(vehicle) && vehicle.isRentable()){
+                this.getVehicles().remove(vehicle);
+                return vehicle;
+            }
+        }
+        throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
     }
 
     /**
@@ -80,29 +82,28 @@ public class Station{
     }
 
     /**
-     * Changes vacuum station status
+     * Change station state to empty
      */
-    public void toEmpty() {
+    private void toEmpty() {
     }
 
     /**
      * Changes station state to 1 vehicle remaining
      */
-    public void toOneVehicleLeft() {
+    private void toOneVehicleLeft() {
 
     }
 
     /**
      * Changes station state to Normal
      */
-    public void toNormal() {
+    private void toNormal() {
     }
 
     /**
      * Changes station vehicle to full
      */
-    public void toFull() {
-
+    private void toFull() {
     }
 
     /**
@@ -122,35 +123,19 @@ public class Station{
     }
 
     /**
-     * can the station rent vehicle
+     * can the station rent any type of vehicle
      * return boolean - true or false
      */
     public boolean canBeRent() {
         return false;
     }
 
-    /**
-     * setter for the setStateTypeVehicleToRent
-     * @param vehicleTypeChooser
-     */
-    public void setStateTypeVehicleToRent(VehicleTypeChooser vehicleTypeChooser) {
-        this.vehicleTypeChooser = vehicleTypeChooser;
-    }
+
 
     public List<Vehicle> getVehicles() {
         return vehicles;
     }
 
-
-    public void toTakeOverBoard() {
-        this.vehicleTypeChooser.toTakeOverBoard();
-    }
-
-
-    public void toTakeBike() {
-        this.vehicleTypeChooser.toTakeBike();
-
-    }
 
     /**
      * Add a subscriber to the station
@@ -166,10 +151,7 @@ public class Station{
     public void removeSubscriber(ControlCenter controlCenter) {
 
     }
-
-
-    public void toTakeScooter() {
-        this.vehicleTypeChooser.toTakeScooter();
-
+    public Vehicle getVehicle(){
+        return this.vehicles.getFirst();
     }
 }
