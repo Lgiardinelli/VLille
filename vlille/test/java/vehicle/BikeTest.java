@@ -4,9 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BikeTest {
+class BikeTest extends VehicleTest {
 
-    @BeforeEach
-    void setUp() {
+
+    @Override
+    protected Vehicle createVehicle() {
+        return new Bike();
     }
 }
