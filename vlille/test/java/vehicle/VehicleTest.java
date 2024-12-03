@@ -1,6 +1,6 @@
 package vehicle;
 
-import exeption.NoVehicleOfThisTypeExeption;
+import exeption.NoVehicleOfThisTypeAvailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.Station;
@@ -59,7 +59,7 @@ abstract class VehicleTest {
             station.rentVehicle();
             station.DropOffVehicle(vehicle);
             assertEquals(1, vehicle.getNbTimeRented());
-        } catch (NoVehicleOfThisTypeExeption e) {
+        } catch (NoVehicleOfThisTypeAvailableException e) {
             throw new RuntimeException(e);
         }
     }

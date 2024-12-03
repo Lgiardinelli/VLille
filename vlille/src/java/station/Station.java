@@ -21,9 +21,8 @@ public class Station{
     protected final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
-    private VehicleTypeChooser vehicleTypeChooser;
     protected final List<ControlCenter> subsribers;
-    private final List<ControlCenter> subsribers;
+
 
     /**
      * Constructor Station
