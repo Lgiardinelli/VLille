@@ -56,7 +56,7 @@ abstract class VehicleTest {
         vehicle.setStation(station);
         assertEquals(0, vehicle.getNbTimeRented());
         try {
-            station.rentVehicle();
+            station.rentVehicle(t -> t instanceof Vehicle);
             station.DropOffVehicle(vehicle);
             assertEquals(1, vehicle.getNbTimeRented());
         } catch (NoVehicleOfThisTypeAvailableException e) {
