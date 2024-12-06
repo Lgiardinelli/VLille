@@ -11,4 +11,9 @@ public class Overboard extends Vehicle {
     public Overboard() {
         super();
     }
+
+    @Override
+    public void decorateEquipment() {
+
+    }
 }

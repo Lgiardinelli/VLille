@@ -10,4 +10,9 @@ public class Bike extends Vehicle {
     public Bike() {
         super();
     }
+
+    @Override
+    public void decorateEquipment() {
+
+    }
 }

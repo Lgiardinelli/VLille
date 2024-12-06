@@ -11,5 +11,9 @@ public class Scooter extends Vehicle {
     public Scooter() {
         super();
     }
-    
+
+    @Override
+    public void decorateEquipment() {
+
+    }
 }
