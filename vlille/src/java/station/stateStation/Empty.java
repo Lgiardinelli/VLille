@@ -1,19 +1,22 @@
 package station.stateStation;
 
-public class Empty implements StateStation {
+import station.Station;
+
+public class Empty extends StateStation {
+
+
+    public Empty(Station s){
+        super(s);
+    }
+
     @Override
     public void toEmpty() {
 
     }
 
     @Override
-    public void toOneVehicleLeft() {
-
-    }
-
-    @Override
     public void toNormal() {
-
+        this.s.setStateStation(new Normal(this.s));
     }
 
     @Override
@@ -21,13 +24,9 @@ public class Empty implements StateStation {
 
     }
 
-    @Override
-    public boolean canBeRobed() {
-        return false;
-    }
 
     @Override
-    public boolean canBeRend() {
+    public boolean canBeRent() {
         return false;
     }
 

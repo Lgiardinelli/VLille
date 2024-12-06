@@ -1,46 +1,46 @@
 package station.stateStation;
 
+import station.Station;
+
 /**
  * Interface for all possible station states
  */
-public interface StateStation {
+public abstract class StateStation {
+
+    protected Station s;
+
+    public StateStation(Station s){
+        this.s = s;
+    }
 
     /**
      * Changes station status to empty
     */
-    public void toEmpty();
+    public abstract void toEmpty();
 
-    /**
-     * Changes station status to one vehicle left
-     */
-    public  void toOneVehicleLeft();
 
     /**
      * Changes station status to Normal
      */
-    public void toNormal();
+    public  abstract void toNormal();
 
     /**
      * Changes station status to Full
      */
-    public void toFull();
+    public  abstract void toFull();
 
-    /**
-     * Checks if the station can be stolen
-     * @return boolean - true if there is a bike in the station, false otherwise
-     */
-    public boolean canBeRobed();
+
 
     /**
      * Checks if the station can rent a vehicle
      * @return boolean - true if there is at least one bike in the station, false otherwise
      */
-    public boolean canBeRend();
+    public  abstract boolean canBeRent();
 
     /**
      * Checks whether the station can hold vehicles
      * @return boolean - true if there is at least one free space in the station, false otherwise
      */
-    public boolean canBeDropOff();
+    public  abstract boolean canBeDropOff();
 
 }
