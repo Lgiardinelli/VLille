@@ -2,6 +2,8 @@ package station;
 
 import controlCenter.ControlCenter;
 import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationEmptyException;
+import exeption.StationFullException;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
 import station.stationVisitor.TypeVehicleTest;
@@ -10,19 +12,19 @@ import vehicle.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Class to manage stations
  */
 public class Station{
 
-    private static int incrId = 0;
     private final int id;
     protected final List<Vehicle>vehicles;
     private final int capacityMax;
     private StateStation stateStation;
     protected final List<ControlCenter> subsribers;
-
+    private static int id_vec = 0;
 
     /**
      * Constructor Station
@@ -31,7 +33,7 @@ public class Station{
         this.id = createId();
         this.capacityMax = randomCapacityMax();
         this.vehicles = new ArrayList<>(this.capacityMax);
-        this.stateStation = new Empty();
+        this.stateStation = new Empty(this);
         this.subsribers = new ArrayList<>();
     }
 
@@ -40,7 +42,7 @@ public class Station{
      * @return int - Id
      */
     private static int createId() {
-        return 0;
+        return id_vec++;
     }
 
     /**
@@ -48,29 +50,43 @@ public class Station{
      * @return int - Between 10 to 20 vehicle capacity
      */
     protected int randomCapacityMax() {
-        return 0;
+        Random x = new Random();
+        return 10 + x.nextInt(11);
     }
 
     /**
      * Add a vehicle to the station
      * @param vehicle - The vehicle to be added
      */
-    public void DropOffVehicle(Vehicle vehicle) {
-
+    public void DropOffVehicle(Vehicle vehicle) throws StationFullException {
+        if(this.canBeDropOff()){
+            this.vehicles.add(vehicle);
+            this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
+            this.updateStateStation();
+        }
+        else {
+            throw new StationFullException();
+        }
     }
 
     /**
      * take a vehicle from the station if possible
      *  @throws NoVehicleOfThisTypeAvailableException - if there is no vehicle of this type
      */
-    public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeAvailableException {
-        for(Vehicle vehicle : this.getVehicles()){
-            if(t.testTypeVehicle(vehicle) && vehicle.isRentable()){
-                this.getVehicles().remove(vehicle);
-                return vehicle;
+    public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeAvailableException, StationEmptyException {
+
+        if(this.canBeRent()){
+            for (Vehicle vehicle : this.getVehicles()) {
+                if (t.testTypeVehicle(vehicle) && vehicle.isRentable()) {
+                    this.getVehicles().remove(vehicle);
+                    this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
+                    this.updateStateStation();
+                    return vehicle;
+                }
             }
+            throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
         }
-        throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
+        throw new StationEmptyException();
     }
 
     /**
@@ -78,49 +94,38 @@ public class Station{
      * @param stationVisitor - Visitor type
      * @return boolean - True if accepted False otherwise
      */
-    public boolean accept(StationVisitor stationVisitor) {
-        return false;
+    public void accept(StationVisitor stationVisitor) {
+        stationVisitor.visit(this);
     }
 
     /**
      * Change station state to empty
      */
     private void toEmpty() {
-    }
-
-    /**
-     * Changes station state to 1 vehicle remaining
-     */
-    private void toOneVehicleLeft() {
-
+        this.stateStation.toEmpty();
     }
 
     /**
      * Changes station state to Normal
      */
     private void toNormal() {
+        this.stateStation.toNormal();
     }
 
     /**
      * Changes station vehicle to full
      */
     private void toFull() {
+        this.stateStation.toFull();
     }
 
-    /**
-     * Can the station be stolen?
-     * @return boolean - true or false
-     */
-    public boolean canBeRobed() {
-        return false;
-    }
 
     /**
      * can the station accommodate vehicle ?
      * @return boolean - true or false
      */
     public boolean canBeDropOff() {
-        return false;
+        return this.stateStation.canBeDropOff();
     }
 
     /**
@@ -128,7 +133,7 @@ public class Station{
      * return boolean - true or false
      */
     public boolean canBeRent() {
-        return false;
+        return this.stateStation.canBeRent();
     }
 
 
@@ -143,6 +148,7 @@ public class Station{
      * @param controlCenter a subscriber
      */
     public void addSubscriber(ControlCenter controlCenter) {
+        this.subsribers.add(controlCenter);
     }
 
     /**
@@ -150,9 +156,32 @@ public class Station{
      * @param controlCenter a subscriber
      */
     public void removeSubscriber(ControlCenter controlCenter) {
-
+        this.subsribers.remove(controlCenter);
     }
+
     public Vehicle getVehicle(){
         return this.vehicles.getFirst();
+    }
+
+    /**
+     * update the state of the station after every time a vehicle is taken or dropped
+     */
+    private void updateStateStation(){
+        if(this.vehicles.size() <= 0){
+            this.toEmpty();
+            this.subsribers.forEach(t -> t.notifyStationEmpty(this));
+
+        } else if (this.vehicles.size() == this.capacityMax) {
+            this.toFull();
+            this.subsribers.forEach(t -> t.notifyStationFull(this));
+        }
+        else{
+            this.toNormal();
+        }
+    }
+
+
+    public void setStateStation(StateStation s){
+        this.stateStation = s;
     }
 }
