@@ -1,6 +1,7 @@
 package station.stationVisitor;
 
 import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationEmptyException;
 import station.Station;
 
 public abstract class GetVehicleVisitor implements StationVisitor{
@@ -11,6 +12,8 @@ public abstract class GetVehicleVisitor implements StationVisitor{
             station.rentVehicle(this.testMethod());
         } catch (NoVehicleOfThisTypeAvailableException e) {
             System.out.println(e);
+        } catch (StationEmptyException e) {
+            throw new RuntimeException(e);
         }
     }
 
