@@ -1,9 +1,8 @@
 package controlCenter;
 
-import exeption.NoVehicleOfThisTypeAvailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import station.MockStation;
+import station.MockStationTestNotif;
 import station.Station;
 import vehicle.Bike;
 import vehicle.Vehicle;
@@ -20,7 +19,7 @@ class ControlCenterTest {
 
     @BeforeEach
     void setUp() {
-        station = new MockStation(controlCenter);
+        station = new MockStationTestNotif(controlCenter);
         List<Station> t = new ArrayList<>();
         t.add(station);
         controlCenter = new ControlCenter(t);
@@ -28,7 +27,7 @@ class ControlCenterTest {
     }
 
     @Test
-    void notifyStationVehicleAddedTest() {
+    void notifyStationVehicleAddedTest() throws Exception {
         Station test = new Station();
         test.addSubscriber(controlCenter);
 
@@ -46,7 +45,7 @@ class ControlCenterTest {
     }
 
     @Test
-    void notifyStationVehicleTakedTestOk() throws NoVehicleOfThisTypeAvailableException {
+    void notifyStationVehicleTakedTestOk() throws Exception {
         Station test = new Station();
         test.addSubscriber(controlCenter);
         station.DropOffVehicle(bike);

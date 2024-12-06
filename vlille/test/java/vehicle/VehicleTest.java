@@ -3,9 +3,8 @@ package vehicle;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import station.MockStationTestNotif;
 import station.Station;
-import vehicle.vehicleVisitor.MockVehicle;
-import vehicle.vehicleVisitor.Repair;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +18,7 @@ abstract class VehicleTest {
     @BeforeEach
     void init() {
         this.vehicle = this.createVehicle();
-        this.station = new Station();
+        this.station = new MockStationTestNotif();
     }
 
     @Test
@@ -61,8 +60,13 @@ abstract class VehicleTest {
             assertEquals(1, vehicle.getNbTimeRented());
         } catch (NoVehicleOfThisTypeAvailableException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
+
+
 
     @Test
     void addOneNbTimeRentedTest() {

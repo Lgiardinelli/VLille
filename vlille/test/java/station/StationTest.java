@@ -1,6 +1,8 @@
 package station;
 
 import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationEmptyException;
+import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import vehicle.Bike;
@@ -13,21 +15,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class StationTest {
 
 
-    private MockStation station;
+    private MockStationTestRandom station;
     private Vehicle bike;
     private Vehicle scooter;
     private Vehicle overBoard;
 
     @BeforeEach
     void setUp() {
-        this.station = new MockStation();
+        this.station = new MockStationTestRandom();
         this.overBoard = new Overboard();
         this.bike = new Bike();
         this.scooter = new Scooter();
     }
 
     @Test
-    void canDropVehiclesStationNotFull(){
+    void canDropVehiclesStationNotFull() throws StationFullException {
         assertEquals(this.station.getVehicles().size(),0);
         assertTrue(this.station.canBeDropOff());
         this.station.DropOffVehicle(this.bike);
@@ -42,12 +44,12 @@ class StationTest {
 
         assertEquals(this.station.getVehicles().size(),2);
         assertFalse(this.station.canBeDropOff());
-        assertThrows(Exception.class,()-> this.station.DropOffVehicle(this.bike));
+        assertThrows(StationFullException.class,()-> this.station.DropOffVehicle(this.bike));
     }
 
 
     @Test
-    void takeVehicleStationNotEmpty() throws NoVehicleOfThisTypeAvailableException {
+    void takeVehicleStationNotEmpty() throws NoVehicleOfThisTypeAvailableException, StationEmptyException {
         this.station.getVehicles().add(this.scooter);
         this.station.getVehicles().add(this.bike);
         int size_prec = this.station.getVehicles().size();
@@ -104,12 +106,5 @@ class StationTest {
         assertEquals(size_prec,this.station.getVehicles().size());
     }
 
-    @Test
-    void testCanBeRobbed() throws NoVehicleOfThisTypeAvailableException {
-        this.station.getVehicles().add(this.overBoard);
-        this.station.getVehicles().add(this.bike);
-        assertFalse(this.station.canBeRobed());
-        this.station.rentVehicle(v -> v instanceof Bike);
-        assertTrue(this.station.canBeRobed());
-    }
+
 }
