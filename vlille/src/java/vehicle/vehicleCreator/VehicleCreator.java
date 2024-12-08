@@ -7,11 +7,7 @@ import vehicle.Vehicle;
  */
 public abstract class VehicleCreator {
 
-    /**
-     * Constructor
-     */
-    public VehicleCreator() {
-    }
+    private static int idVehicle = 1;
 
     /**
      * method that creates a vehicle and return it, when the vehicle is created a unique id is generated for it by the method generateId()
@@ -23,7 +19,9 @@ public abstract class VehicleCreator {
      * method that generates a unique id for a vehicle
      * @return int
      */
-    private int generateId() {
-        return 0;
+    public int generateId() {
+        return idVehicle++;
     }
+
+
 }
