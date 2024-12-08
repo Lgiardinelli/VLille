@@ -7,10 +7,13 @@ import vehicle.Bike;
  */
 public class BikeCreator extends VehicleCreator {
 
+    private int id;
+
     /**
      * Constructor
      */
     public BikeCreator() {
+        this.id = generateId();
     }
 
     /**
@@ -21,4 +24,13 @@ public class BikeCreator extends VehicleCreator {
     public Bike createVehicle() {
         return new Bike();
     }
+
+    /**
+     * Return id of this vehicle
+     * @return int - the id of this vehicle
+     */
+    public int getId() {
+        return id;
+    }
+
 }
