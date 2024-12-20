@@ -2,6 +2,9 @@ package controlCenter;
 
 import controlCenter.redistibutionStrategy.RedistributionRobin;
 import controlCenter.redistibutionStrategy.RedistributionStrategy;
+import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationEmptyException;
+import exeption.StationFullException;
 import station.Station;
 import vehicle.Vehicle;
 
@@ -51,8 +54,8 @@ public class ControlCenter implements SubscribeControlCenter {
     /**
      * Execute the strategy
      */
-    public void executeStrategy() {
-
+    public void executeStrategy(Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
+        this.strategy.reallocation(stations.keySet(), station);
     }
 
     /**
