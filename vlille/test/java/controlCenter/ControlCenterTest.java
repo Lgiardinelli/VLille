@@ -33,12 +33,12 @@ class ControlCenterTest {
 
         //if the station is already in the map
         assertEquals(0,controlCenter.getNbVehicleStation(station));
-        station.DropOffVehicle(bike);
+        station.dropOffVehicle(bike);
         assertEquals(1, controlCenter.getNbVehicleStation(station));
 
         //if the station not in the map
         assertFalse(controlCenter.getStations().containsKey(test));
-        test.DropOffVehicle(bike);
+        test.dropOffVehicle(bike);
         assertTrue(controlCenter.getStations().containsKey(test));
         assertEquals(1, controlCenter.getNbVehicleStation(test));
 
@@ -48,7 +48,7 @@ class ControlCenterTest {
     void notifyStationVehicleTakedTestOk() throws Exception {
         Station test = new Station();
         test.addSubscriber(controlCenter);
-        station.DropOffVehicle(bike);
+        station.dropOffVehicle(bike);
         test.getVehicles().add(bike);
 
         //if the station is already in the map

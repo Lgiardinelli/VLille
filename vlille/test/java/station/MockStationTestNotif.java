@@ -19,7 +19,7 @@ public class MockStationTestNotif extends Station{
     }
 
     @Override
-    public void DropOffVehicle(Vehicle vehicle) throws StationFullException {
+    public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
         this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
     }
 
