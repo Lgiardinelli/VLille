@@ -10,7 +10,6 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  */
 public abstract class Vehicle {
 
-    private static final int nbMaxTimeRented = 5;
     private int id;
     private Station station;
     private int nbTimeRented;
@@ -111,10 +110,12 @@ public abstract class Vehicle {
      * test if the vehicle need to be repaired if it's the case if change the state of the vehicle
      */
     private void updateState(){
-        if(nbTimeRented == nbMaxTimeRented){
+        if(nbTimeRented == this.nbMaxTimeRented()){
             this.toHS();
         }
 
     }
+
+    protected abstract int nbMaxTimeRented();
 
 }

@@ -16,4 +16,9 @@ public class Overboard extends Vehicle {
     public String decorateEquipment() {
         return "This is an Overboard";
     }
+
+    @Override
+    protected int nbMaxTimeRented() {
+        return 2;
+    }
 }

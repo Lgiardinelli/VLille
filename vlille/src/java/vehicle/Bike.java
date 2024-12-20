@@ -15,4 +15,9 @@ public class Bike extends Vehicle {
     public String decorateEquipment() {
         return "This is a Bike";
     }
+
+    @Override
+    protected int nbMaxTimeRented() {
+        return 6;
+    }
 }

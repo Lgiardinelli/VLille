@@ -16,4 +16,9 @@ public class Scooter extends Vehicle {
     public String decorateEquipment() {
         return "This is a Scooter";
     }
+
+    @Override
+    protected int nbMaxTimeRented() {
+        return 4;
+    }
 }
