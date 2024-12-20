@@ -15,6 +15,6 @@ public class MockEquip extends Equipment{
 
     @Override
     public String decorateEquipment() {
-        return String.format("%s MockE ",super.decorateEquipment());
+        return String.format("%sMockE ",super.decorateEquipment());
     }
 }

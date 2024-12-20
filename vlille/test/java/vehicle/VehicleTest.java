@@ -1,11 +1,15 @@
 package vehicle;
 
 import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.MockStationTestNotif;
+import station.MockStationVehcNbTimeRent;
 import station.Station;
 import vehicle.equipment.MockEquip;
+import vehicle.stateVehicle.HS;
+import vehicle.stateVehicle.Robed;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +17,8 @@ abstract class VehicleTest {
 
     protected Vehicle vehicle;
     protected Station station;
+    private MockStationVehcNbTimeRent stationDrop;
+    private Vehicle mockVec;
 
     protected abstract Vehicle createVehicle();
 
@@ -20,6 +26,8 @@ abstract class VehicleTest {
     void init() {
         this.vehicle = this.createVehicle();
         this.station = new MockStationTestNotif();
+        this.stationDrop = new MockStationVehcNbTimeRent();
+        this.mockVec = new MockVehicle(0);
     }
 
     @Test
@@ -29,13 +37,13 @@ abstract class VehicleTest {
 
     @Test
     void isRentableTestKo1() {
-        vehicle.toHS();
+        vehicle.setState(new HS(this.vehicle));
         assertFalse(vehicle.isRentable());
     }
 
     @Test
     void isRentableTestKo2() {
-        vehicle.toRobed();
+        vehicle.setState(new Robed(this.vehicle));
         assertFalse(vehicle.isRentable());
     }
 
@@ -50,7 +58,7 @@ abstract class VehicleTest {
         vehicle.setStation(station);
         assertEquals(vehicle.getStation(), station);
     }
-
+    /*
     @Test
     void getNbTimeRentedTest() {
         vehicle.setStation(station);
@@ -66,7 +74,7 @@ abstract class VehicleTest {
         }
     }
 
-
+    */
 
 
     @Test
@@ -102,6 +110,28 @@ abstract class VehicleTest {
         assertTrue(y.decorateEquipment().contains("and MockE and MockE"));
 
 
+
+    }
+
+    @Test
+    void testNbTimeRentedAugmentedWhenVehicleIsDropOff() throws StationFullException {
+        int nbTimeRentedInit = this.vehicle.getNbTimeRented();
+
+        this.stationDrop.DropOffVehicle(this.vehicle);
+
+        assertEquals(1,this.vehicle.getNbTimeRented()-nbTimeRentedInit);
+    }
+
+
+    @Test
+    void testStateChangeWhenVehicleIsDropOffAndNbTimeAugmentedLimitReach() throws StationFullException {
+        int nbTimeRentedInit = this.mockVec.getNbTimeRented();
+
+        this.stationDrop.DropOffVehicle(this.mockVec);
+
+        assertEquals(1,this.mockVec.getNbTimeRented()-nbTimeRentedInit);
+        assertFalse(this.mockVec.isRentable());
+        assertInstanceOf(HS.class,this.mockVec.getState());
 
     }
 
