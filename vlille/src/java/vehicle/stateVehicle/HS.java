@@ -1,14 +1,21 @@
 package vehicle.stateVehicle;
 
 
+import vehicle.Vehicle;
 
 /**
  * HS state for the StateVehicle interface
  */
-public class HS implements StateVehicle{
+public class HS extends AbstractStateVehicle implements StateVehicle{
+
+    public HS(Vehicle v) {
+        super(v);
+    }
 
     @Override
-    public void toService(){};
+    public void toService(){
+        this.v.setState(new Service(this.v));
+    };
 
     @Override
     public void toHS(){};

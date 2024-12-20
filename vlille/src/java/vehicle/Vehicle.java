@@ -9,14 +9,17 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  * class that handles the different types of vehicle
  */
 public abstract class Vehicle {
+
+    private static final int nbMaxTimeRented = 5;
     private int id;
     private Station station;
     private int nbTimeRented;
     private StateVehicle state;
 
-    public Vehicle(){
+    public Vehicle(int id){
+        this.id = id;
         this.nbTimeRented = 0;
-        this.state = new Service();
+        this.state = new Service(this);
     }
 
     /**
@@ -58,6 +61,7 @@ public abstract class Vehicle {
      */
     public void addOneNbTimeRented() {
         this.nbTimeRented += 1;
+        this.updateState();
     }
 
     /**
@@ -66,28 +70,33 @@ public abstract class Vehicle {
     public abstract String decorateEquipment();
 
     /**
-     * method that checks whether the object accepts the visitor
+     * method that accept the visitor and give the station a parameter
      * @param visitor a visitor on objet vehicle
-     * @return a boolean for the visitor
      */
-    public boolean accept(VehicleVisitor visitor){
-        return false;
+    public void accept(VehicleVisitor visitor){
+        visitor.visit(this);
     }
 
     /**
      * method that changes the current state to the Service state if its possible
      */
-    public void toService(){}
+    public void toService(){
+        this.state.toService();
+    }
 
     /**
      * method that changes the current state to the HS state if its possible
      */
-    public void toHS(){}
+    public void toHS(){
+        this.state.toHS();
+    }
 
     /**
      * method that changes the current state to the Robbed state if its possible
      */
-    public void toRobed(){}
+    public void toRobed(){
+        this.state.toRobed();
+    }
 
 
     /**
@@ -98,6 +107,14 @@ public abstract class Vehicle {
         this.state = state;
     }
 
+    /**
+     * test if the vehicle need to be repaired if it's the case if change the state of the vehicle
+     */
+    private void updateState(){
+        if(nbTimeRented == nbMaxTimeRented){
+            this.toHS();
+        }
 
+    }
 
 }

@@ -1,20 +1,30 @@
 package vehicle.stateVehicle;
 
 
+import vehicle.Vehicle;
+
 /**
  * Service state for the StateVehicle interface
  */
-public class Service implements StateVehicle{
+public class Service extends AbstractStateVehicle implements StateVehicle{
 
+
+    public Service(Vehicle v) {
+        super(v);
+    }
 
     @Override
     public void toService(){};
 
     @Override
-    public void toHS(){};
+    public void toHS(){
+        this.v.setState(new HS(this.v));
+    };
 
     @Override
-    public void toRobed(){};
+    public void toRobed(){
+        this.v.setState(new Robed(this.v));
+    };
 
     @Override
     public boolean isRentable(){

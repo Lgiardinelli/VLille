@@ -1,9 +1,15 @@
 package vehicle.stateVehicle;
 
+import vehicle.Vehicle;
+
 /**
  * Robed state for the StateVehicle interface
  */
-public class Robed implements StateVehicle{
+public class Robed extends AbstractStateVehicle implements StateVehicle{
+
+    public Robed(Vehicle v) {
+        super(v);
+    }
 
     @Override
     public void toService(){};
