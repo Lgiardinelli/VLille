@@ -1,6 +1,5 @@
 package vehicle;
 
-import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -92,6 +91,7 @@ abstract class VehicleTest {
         //decorate de equip
         Vehicle t = new MockEquip(this.vehicle);
 
+
         assertTrue(t.decorateEquipment().contains("with"));
     }
 
@@ -117,7 +117,7 @@ abstract class VehicleTest {
     void testNbTimeRentedAugmentedWhenVehicleIsDropOff() throws StationFullException {
         int nbTimeRentedInit = this.vehicle.getNbTimeRented();
 
-        this.stationDrop.DropOffVehicle(this.vehicle);
+        this.stationDrop.dropOffVehicle(this.vehicle);
 
         assertEquals(1,this.vehicle.getNbTimeRented()-nbTimeRentedInit);
     }
@@ -127,7 +127,7 @@ abstract class VehicleTest {
     void testStateChangeWhenVehicleIsDropOffAndNbTimeAugmentedLimitReach() throws StationFullException {
         int nbTimeRentedInit = this.mockVec.getNbTimeRented();
 
-        this.stationDrop.DropOffVehicle(this.mockVec);
+        this.stationDrop.dropOffVehicle(this.mockVec);
 
         assertEquals(1,this.mockVec.getNbTimeRented()-nbTimeRentedInit);
         assertFalse(this.mockVec.isRentable());
