@@ -24,7 +24,7 @@ public abstract class Vehicle {
      * @return a boolean for the response
      */
     public boolean isRentable(){
-        return false;
+        return this.state.isRentable();
     }
 
     /**
