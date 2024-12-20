@@ -10,9 +10,14 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  */
 public abstract class Vehicle {
 
+
+
     private int id;
     private Station station;
     private int nbTimeRented;
+
+
+
     private StateVehicle state;
 
     public Vehicle(int id){
@@ -26,7 +31,7 @@ public abstract class Vehicle {
      * @return a boolean for the response
      */
     public boolean isRentable(){
-        return false;
+        return this.state.isRentable();
     }
 
     /**
@@ -116,6 +121,25 @@ public abstract class Vehicle {
 
     }
 
+    /**
+     * define a nbMaxTimeRented for each type of vehicle which extend Vehicle
+     * @return a int represent the maximum value of vehicle rentability
+     */
     protected abstract int nbMaxTimeRented();
 
+    /**
+     *  the state of the vehicle
+     * @return a state
+     */
+    public StateVehicle getState() {
+        return state;
+    }
+
+    /**
+     * get the id of the vehicle
+     * @return an id
+     */
+    public int getId() {
+        return id;
+    }
 }

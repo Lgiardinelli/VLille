@@ -28,6 +28,6 @@ public class Service extends AbstractStateVehicle implements StateVehicle{
 
     @Override
     public boolean isRentable(){
-        return false;
+        return true;
     };
 }

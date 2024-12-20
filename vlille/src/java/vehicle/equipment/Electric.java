@@ -15,6 +15,6 @@ public class Electric extends Equipment {
     }
     @Override
     public String decorateEquipment() {
-        return   String.format("%s an electrical supply",super.decorateEquipment());
+        return   String.format("%s an electrical supply ",super.decorateEquipment());
     }
 }

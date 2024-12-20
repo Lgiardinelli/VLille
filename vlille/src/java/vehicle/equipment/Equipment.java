@@ -14,11 +14,17 @@ public class Equipment extends Vehicle {
      * @param vehicle the vehicle
      */
     public Equipment(Vehicle vehicle) {
+        super(vehicle.getId());
         this.vehicle = vehicle;
     }
 
     @Override
     public String decorateEquipment() {
-        return vehicle.decorateEquipment().contains("with")? String.format("%s and",vehicle.decorateEquipment()):String.format("%s with",vehicle.decorateEquipment());
+        return vehicle.decorateEquipment().contains("with")? String.format("%sand ",vehicle.decorateEquipment()):String.format("%s with ",vehicle.decorateEquipment());
+    }
+
+    @Override
+    protected int nbMaxTimeRented() {
+        return vehicle.getNbTimeRented();
     }
 }

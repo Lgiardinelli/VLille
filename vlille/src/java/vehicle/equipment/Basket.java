@@ -17,6 +17,6 @@ public class Basket extends Equipment {
 
     @Override
     public String decorateEquipment() {
-        return String.format("%s a basket",super.decorateEquipment());
+        return String.format("%s a basket ",super.decorateEquipment());
     }
 }
