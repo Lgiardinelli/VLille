@@ -23,7 +23,7 @@ class ControlCenterTest {
         List<Station> t = new ArrayList<>();
         t.add(station);
         controlCenter = new ControlCenter(t);
-        bike = new Bike();
+        bike = new Bike(0);
     }
 
     @Test
