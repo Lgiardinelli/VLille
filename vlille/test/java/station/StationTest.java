@@ -38,9 +38,9 @@ class StationTest {
     }
 
     @Test
-    void canDropVehiclesStationIsFull(){
-        this.station.getVehicles().add(this.scooter);
-        this.station.getVehicles().add(this.overBoard);
+    void canDropVehiclesStationIsFull() throws StationFullException {
+        this.station.dropOffVehicle(this.scooter);
+        this.station.dropOffVehicle(this.overBoard);
 
         assertEquals(this.station.getVehicles().size(),2);
         assertFalse(this.station.canBeDropOff());
@@ -49,9 +49,9 @@ class StationTest {
 
 
     @Test
-    void takeVehicleStationNotEmpty() throws NoVehicleOfThisTypeAvailableException, StationEmptyException {
-        this.station.getVehicles().add(this.scooter);
-        this.station.getVehicles().add(this.bike);
+    void takeVehicleStationNotEmpty() throws NoVehicleOfThisTypeAvailableException, StationEmptyException, StationFullException {
+        this.station.dropOffVehicle(this.scooter);
+        this.station.dropOffVehicle(this.bike);
         int size_prec = this.station.getVehicles().size();
 
         assertFalse(this.station.getVehicles().isEmpty());
@@ -74,9 +74,9 @@ class StationTest {
     }
 
     @Test
-    void takeVehicleStationNotEmptyButTheVehicleIsNotRentable(){
-        this.station.getVehicles().add(this.scooter);
-        this.station.getVehicles().add(this.bike);
+    void takeVehicleStationNotEmptyButTheVehicleIsNotRentable() throws StationFullException {
+        this.station.dropOffVehicle(this.scooter);
+        this.station.dropOffVehicle(this.bike);
         //bike is not rentable
         this.bike.toHS();
         assertFalse(this.station.getVehicles().isEmpty());
@@ -87,10 +87,10 @@ class StationTest {
 
 
     @Test
-    void takeVehicleStationNotEmptyKO(){
+    void takeVehicleStationNotEmptyKO() throws StationFullException {
         //case when there is no vehicle of the type wanted in the station
-        this.station.getVehicles().add(this.scooter);
-        this.station.getVehicles().add(this.bike);
+        this.station.dropOffVehicle(this.scooter);
+        this.station.dropOffVehicle(this.bike);
         assertFalse(this.station.getVehicles().isEmpty());
         assertTrue(this.station.canBeRent());
         assertThrows(NoVehicleOfThisTypeAvailableException.class,()->station.rentVehicle(v -> v instanceof Overboard));

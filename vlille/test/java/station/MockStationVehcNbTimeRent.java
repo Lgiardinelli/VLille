@@ -6,7 +6,7 @@ import vehicle.Vehicle;
 public class MockStationVehcNbTimeRent extends Station{
 
     @Override
-    public void DropOffVehicle(Vehicle vehicle) throws StationFullException {
+    public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
         vehicle.addOneNbTimeRented();
     }
 }

@@ -70,6 +70,7 @@ public class Station{
             this.vehicles.add(vehicle);
             this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
             this.updateStateStation();
+            vehicle.addOneNbTimeRented();
         }
         else {
             throw new StationFullException();
