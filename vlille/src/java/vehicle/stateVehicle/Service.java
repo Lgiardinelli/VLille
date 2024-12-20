@@ -18,6 +18,6 @@ public class Service implements StateVehicle{
 
     @Override
     public boolean isRentable(){
-        return false;
+        return true;
     };
 }
