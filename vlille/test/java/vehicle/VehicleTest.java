@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.MockStationTestNotif;
 import station.Station;
+import vehicle.equipment.MockEquip;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,12 +77,32 @@ abstract class VehicleTest {
     }
 
     @Test
-    void decorateEquipmentTest() {
-        /**
-        assertEquals(0, vehicle.applyCalled);
-        vehicle.decorateEquipment();
-        assertEquals(1, vehicle.applyCalled);
-         */
+    void decorateEquipmentTestWith() {
+        //test case when the first decorator is wrapped
+        assertFalse(this.vehicle.decorateEquipment().contains("with"));
+
+        //decorate de equip
+        Vehicle t = new MockEquip(this.vehicle);
+
+        assertTrue(t.decorateEquipment().contains("with"));
+    }
+
+    @Test
+    void decorateEquipmentTestAnd() {
+        //test case when the vehicle is already decorate, the String can't have more than than 1 with so after is only and
+        Vehicle t = new MockEquip(this.vehicle);
+        assertTrue(t.decorateEquipment().contains("with"));
+
+        //decorate de equip
+        Vehicle u = new MockEquip(t);
+        assertTrue(u.decorateEquipment().contains("and"));
+
+        //let's add one more and see if we have 2 and
+        Vehicle y = new MockEquip(u);
+        assertTrue(y.decorateEquipment().contains("and MockE and MockE"));
+
+
+
     }
 
     }

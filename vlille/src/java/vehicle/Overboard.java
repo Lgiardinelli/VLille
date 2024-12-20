@@ -13,7 +13,7 @@ public class Overboard extends Vehicle {
     }
 
     @Override
-    public void decorateEquipment() {
-
+    public String decorateEquipment() {
+        return "This is an Overboard";
     }
 }

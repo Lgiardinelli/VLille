@@ -11,7 +11,8 @@ public class MockVehicle extends Vehicle {
     }
 
     @Override
-    public void decorateEquipment() {
+    public String decorateEquipment() {
         this.applyCalled += 1;
+        return "";
     }
 }

@@ -12,7 +12,7 @@ public class Bike extends Vehicle {
     }
 
     @Override
-    public void decorateEquipment() {
-
+    public String decorateEquipment() {
+        return "This is a Bike";
     }
 }

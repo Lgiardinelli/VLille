@@ -18,7 +18,7 @@ public class Equipment extends Vehicle {
     }
 
     @Override
-    public void decorateEquipment() {
-        vehicle.decorateEquipment();
+    public String decorateEquipment() {
+        return vehicle.decorateEquipment().contains("with")? String.format("%s and",vehicle.decorateEquipment()):String.format("%s with",vehicle.decorateEquipment());
     }
 }

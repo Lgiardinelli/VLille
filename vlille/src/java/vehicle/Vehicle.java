@@ -63,7 +63,7 @@ public abstract class Vehicle {
     /**
      * method that allows to decorate our vehicle with different equipment
      */
-    public abstract void decorateEquipment();
+    public abstract String decorateEquipment();
 
     /**
      * method that checks whether the object accepts the visitor
@@ -97,6 +97,7 @@ public abstract class Vehicle {
     public void setState(StateVehicle state) {
         this.state = state;
     }
+
 
 
 }
