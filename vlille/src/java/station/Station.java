@@ -38,6 +38,13 @@ public class Station{
     }
 
     /**
+     * Get the capacityMax station
+     */
+    public int getCapacityMax() {
+        return capacityMax;
+    }
+
+    /**
      * Private method that creates an identifier for each station
      * @return int - Id
      */
@@ -58,7 +65,7 @@ public class Station{
      * Add a vehicle to the station
      * @param vehicle - The vehicle to be added
      */
-    public void DropOffVehicle(Vehicle vehicle) throws StationFullException {
+    public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
         if(this.canBeDropOff()){
             this.vehicles.add(vehicle);
             this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
