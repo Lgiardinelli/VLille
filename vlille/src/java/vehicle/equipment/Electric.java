@@ -14,6 +14,7 @@ public class Electric extends Equipment {
         super(vehicle);
     }
     @Override
-    public void decorateEquipment() {
+    public String decorateEquipment() {
+        return   String.format("%s an electrical supply",super.decorateEquipment());
     }
 }
