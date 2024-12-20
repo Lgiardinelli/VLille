@@ -32,7 +32,7 @@ class StationTest {
     void canDropVehiclesStationNotFull() throws StationFullException {
         assertEquals(this.station.getVehicles().size(),0);
         assertTrue(this.station.canBeDropOff());
-        this.station.DropOffVehicle(this.bike);
+        this.station.dropOffVehicle(this.bike);
         assertEquals(this.station.getVehicles().size(),1);
         assertTrue(this.station.canBeDropOff());
     }
@@ -44,7 +44,7 @@ class StationTest {
 
         assertEquals(this.station.getVehicles().size(),2);
         assertFalse(this.station.canBeDropOff());
-        assertThrows(StationFullException.class,()-> this.station.DropOffVehicle(this.bike));
+        assertThrows(StationFullException.class,()-> this.station.dropOffVehicle(this.bike));
     }
 
 
