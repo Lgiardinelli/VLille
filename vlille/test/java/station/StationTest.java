@@ -102,7 +102,7 @@ class StationTest {
         assertTrue(this.station.getVehicles().isEmpty());
         assertFalse(this.station.canBeRent());
 
-        assertThrows(Exception.class,()-> this.station.rentVehicle(v -> v instanceof Bike));
+        assertThrows(StationEmptyException.class,()-> this.station.rentVehicle(v -> v instanceof Bike));
         assertEquals(size_prec,this.station.getVehicles().size());
     }
 

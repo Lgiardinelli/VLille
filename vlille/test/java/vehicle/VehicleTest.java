@@ -36,13 +36,13 @@ abstract class VehicleTest {
 
     @Test
     void isRentableTestKo1() {
-        vehicle.setState(new HS(this.vehicle));
+        vehicle.toHS();
         assertFalse(vehicle.isRentable());
     }
 
     @Test
     void isRentableTestKo2() {
-        vehicle.setState(new Robed(this.vehicle));
+        vehicle.toRobed();
         assertFalse(vehicle.isRentable());
     }
 
