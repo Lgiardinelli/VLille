@@ -28,7 +28,7 @@ public class MockStationTestNotif extends Station{
     @Override
     public Vehicle rentVehicle(TypeVehicleTest t) {
         this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
-        return new Bike();
+        return new Bike(0);
     }
 }
 

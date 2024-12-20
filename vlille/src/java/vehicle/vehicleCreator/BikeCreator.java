@@ -13,7 +13,7 @@ public class BikeCreator extends VehicleCreator {
      * Constructor
      */
     public BikeCreator() {
-        this.id = generateId();
+        super();
     }
 
     /**
@@ -22,7 +22,7 @@ public class BikeCreator extends VehicleCreator {
      * @return Bike
      */
     public Bike createVehicle() {
-        return new Bike();
+        return new Bike(this.generateId());
     }
 
     /**

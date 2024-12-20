@@ -13,7 +13,7 @@ public class OverboardCreator extends VehicleCreator {
      * Constructor
      */
     public OverboardCreator() {
-        this.id = generateId();
+        super();
     }
     /**
      * {@inheritDoc}.
@@ -21,7 +21,7 @@ public class OverboardCreator extends VehicleCreator {
      * @return Overboard
      */
     public Overboard createVehicle() {
-        return new Overboard();
+        return new Overboard(this.generateId());
     }
 
     /**

@@ -13,7 +13,7 @@ public class ScooterCreator extends VehicleCreator {
      * Constructor
      */
     public ScooterCreator() {
-        this.id = generateId();
+        super();
     }
     /**
      * {@inheritDoc}.
@@ -21,7 +21,7 @@ public class ScooterCreator extends VehicleCreator {
      * @return Scooter
      */
     public Scooter createVehicle() {
-        return new Scooter();
+        return new Scooter(this.generateId());
     }
 
     /**

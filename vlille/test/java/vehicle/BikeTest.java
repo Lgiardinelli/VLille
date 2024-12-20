@@ -9,6 +9,6 @@ class BikeTest extends VehicleTest {
 
     @Override
     protected Vehicle createVehicle() {
-        return new Bike();
+        return new Bike(0);
     }
 }

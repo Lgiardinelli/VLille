@@ -7,8 +7,8 @@ public class Bike extends Vehicle {
     /**
      * Bike constructor
      */
-    public Bike() {
-        super();
+    public Bike(int id) {
+        super(id);
     }
 
     @Override

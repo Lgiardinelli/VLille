@@ -8,8 +8,8 @@ public class Scooter extends Vehicle {
     /**
      * Scooter constructor
      */
-    public Scooter() {
-        super();
+    public Scooter(int id) {
+        super(id);
     }
 
     @Override

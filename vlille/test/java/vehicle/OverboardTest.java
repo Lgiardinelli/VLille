@@ -8,6 +8,6 @@ class OverboardTest extends VehicleTest {
 
     @Override
     protected Vehicle createVehicle() {
-        return new Overboard();
+        return new Overboard(0);
     }
 }

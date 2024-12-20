@@ -8,8 +8,8 @@ public class Overboard extends Vehicle {
     /**
      * Overboard constructor
      */
-    public Overboard() {
-        super();
+    public Overboard(int id) {
+        super(id);
     }
 
     @Override

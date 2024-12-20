@@ -23,9 +23,9 @@ class StationTest {
     @BeforeEach
     void setUp() {
         this.station = new MockStationTestRandom();
-        this.overBoard = new Overboard();
-        this.bike = new Bike();
-        this.scooter = new Scooter();
+        this.overBoard = new Overboard(0);
+        this.bike = new Bike(0);
+        this.scooter = new Scooter(0);
     }
 
     @Test
