@@ -50,7 +50,7 @@ public class ControlCenter implements SubscribeControlCenter {
         }
     }
 
-    public ControlCenter(List<Station> s, List<Vehicle> v) {
+    public ControlCenter(List<Station> s, Set<Vehicle> v) {
         this.stations = new HashMap<>();
         this.vehicles = new HashSet<>();
         this.strategy = new RedistributionRobin();
