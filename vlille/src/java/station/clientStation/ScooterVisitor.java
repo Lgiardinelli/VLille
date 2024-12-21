@@ -1,8 +1,11 @@
-package station.stationVisitor;
+package station.clientStation;
 
 import vehicle.Overboard;
 
-public class OverBoardVisitor extends GetVehicleVisitor{
+/**
+ * reprend a client who want a Scooter
+ */
+public class ScooterVisitor extends AbstractClientStation {
 
     @Override
     protected TypeVehicleTest testMethod() {

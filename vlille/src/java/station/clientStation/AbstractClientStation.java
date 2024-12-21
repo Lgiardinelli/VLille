@@ -1,12 +1,15 @@
-package station.stationVisitor;
+package station.clientStation;
 
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import station.Station;
 
-public abstract class GetVehicleVisitor implements StationVisitor{
+public abstract class AbstractClientStation {
 
-    @Override
+    /**
+     * visit a station a take a vehicle of the type wanted
+     * @param station the station selected to take a vehicle
+     */
     public void visit(Station station) {
         try {
             station.rentVehicle(this.testMethod());
