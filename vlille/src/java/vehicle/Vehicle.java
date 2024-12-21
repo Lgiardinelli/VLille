@@ -10,14 +10,9 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  */
 public abstract class Vehicle {
 
-
-
     private int id;
     private Station station;
     private int nbTimeRented;
-
-
-
     private StateVehicle state;
 
     public Vehicle(int id){
@@ -77,7 +72,7 @@ public abstract class Vehicle {
      * method that accept the visitor and give the station a parameter
      * @param visitor a visitor on objet vehicle
      */
-    public void accept(VehicleVisitor visitor){
+    public void accept(VehicleVisitor visitor) throws Exception {
         visitor.visit(this);
     }
 
@@ -118,7 +113,6 @@ public abstract class Vehicle {
         if(nbTimeRented == this.nbMaxTimeRented()){
             this.toHS();
         }
-
     }
 
     /**
