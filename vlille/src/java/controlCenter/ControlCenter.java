@@ -50,19 +50,12 @@ public class ControlCenter implements SubscribeControlCenter {
         }
     }
 
-    public ControlCenter(List<Station> s, Set<Vehicle> v) {
+    public ControlCenter(Set<Vehicle> v) {
         this.stations = new HashMap<>();
         this.vehicles = new HashSet<>();
         this.strategy = new RedistributionRobin();
         this.stationToRedistribute = new ArrayList<>();
-        if (!s.isEmpty()) {
-            s.forEach(t -> this.stations.put(t, 0));
-            s.forEach(t -> {
-                if (!t.canBeRent() && t.canBeDropOff() || t.canBeRent() && !t.canBeDropOff()) {
-                    this.stationToRedistribute.add(t);
-                }
-            });
-        }
+        this.stations = new HashMap<>();
         if (!v.isEmpty())
             this.vehicles.addAll(v);
     }

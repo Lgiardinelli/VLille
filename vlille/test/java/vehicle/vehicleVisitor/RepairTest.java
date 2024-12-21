@@ -44,7 +44,7 @@ class RepairTest {
         vehicles.add(v1);
         vehicles.add(v2);
         vehicles.add(v3);
-        controlCenter = new ControlCenter(stations, vehicles);
+        controlCenter = new ControlCenter(vehicles);
         s1.dropOffVehicle(v1);
         s1.dropOffVehicle(v2);
         s1.dropOffVehicle(v3);
