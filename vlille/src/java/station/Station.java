@@ -1,7 +1,6 @@
 package station;
 
 import controlCenter.ControlCenter;
-import timeControler.Time;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
@@ -9,7 +8,7 @@ import station.stateStation.Empty;
 import station.stateStation.StateStation;
 import station.clientStation.TypeVehicleTest;
 import station.stationVisitor.StationVisitor;
-import timeControler.TimeDedendecies;
+import timeControler.TimeDependencies;
 import vehicle.Vehicle;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.Random;
 /**
  * Class to manage stations
  */
-public class Station extends TimeDedendecies{
+public class Station extends TimeDependencies {
 
     private final int id;
     protected final List<Vehicle>vehicles;
@@ -27,7 +26,6 @@ public class Station extends TimeDedendecies{
     private StateStation stateStation;
     protected final List<ControlCenter> subsribers;
     private static int id_vec = 0;
-    private final Time time = new Time();
 
     /**
      * Constructor Station
@@ -235,14 +233,6 @@ public class Station extends TimeDedendecies{
     }
 
     /**
-     * the time associate a the station
-     * @return a Time object
-     */
-    public Time getTime() {
-        return time;
-    }
-
-    /**
      * getter for the list of control center
      * @return the list of control center
      */
@@ -252,6 +242,6 @@ public class Station extends TimeDedendecies{
 
     @Override
     protected void updateTime() {
-        this.time.resetCount();
+        this.getTime().resetCount();
     }
 }

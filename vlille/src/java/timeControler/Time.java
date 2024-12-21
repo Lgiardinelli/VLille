@@ -1,5 +1,7 @@
 package timeControler;
 
+import station.Station;
+
 public class Time {
 
     private int interValeNoModif;
@@ -41,4 +43,6 @@ public class Time {
     public void addOneInterValeNoModif() {
         this.interValeNoModif++ ;
     }
+
+
 }

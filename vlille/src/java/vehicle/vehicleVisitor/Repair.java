@@ -2,7 +2,7 @@ package vehicle.vehicleVisitor;
 
 import controlCenter.ControlCenter;
 import timeControler.Time;
-import timeControler.TimeDedendecies;
+import timeControler.TimeDependencies;
 import vehicle.Bike;
 import vehicle.Overboard;
 import vehicle.Scooter;
@@ -13,7 +13,7 @@ import vehicle.stateVehicle.Service;
 /**
  * class Repair
  */
-public class Repair extends TimeDedendecies implements VehicleVisitor{
+public class Repair extends TimeDependencies implements VehicleVisitor{
 
     private Time time = new Time();
     private ControlCenter controlCenter;

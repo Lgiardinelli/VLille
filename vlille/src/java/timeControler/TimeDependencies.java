@@ -4,7 +4,7 @@ package timeControler;
 /**
  * Class for the Object depended to time
  */
-public abstract class TimeDedendecies {
+public abstract class TimeDependencies {
 
     private final Time time = new Time();
 
@@ -12,4 +12,12 @@ public abstract class TimeDedendecies {
      * method that force Objet dependent to time to define a method to update time each interval
      */
     protected abstract void updateTime();
+
+    /**
+     * the time associate to Time dependent object
+     * @return a Time object
+     */
+    public Time getTime() {
+        return this.time;
+    }
 }

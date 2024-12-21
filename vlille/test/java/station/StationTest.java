@@ -30,11 +30,20 @@ class StationTest {
 
     @Test
     void canDropVehiclesStationNotFull() throws StationFullException {
+        //test count of station
+        int count_init = this.station.getTime().getInterValeNoModif();
+        assertEquals(0,count_init);
+        this.station.getTime().addOneInterValeNoModif();
+
         assertEquals(this.station.getVehicles().size(),0);
         assertTrue(this.station.canBeDropOff());
         this.station.dropOffVehicle(this.bike);
+
         assertEquals(this.station.getVehicles().size(),1);
         assertTrue(this.station.canBeDropOff());
+
+        //test time has been reset
+        assertEquals(0,this.station.getTime().getInterValeNoModif());
     }
 
     @Test
@@ -42,17 +51,33 @@ class StationTest {
         this.station.dropOffVehicle(this.scooter);
         this.station.dropOffVehicle(this.overBoard);
 
+        //test count of station
+        int count_init = this.station.getTime().getInterValeNoModif();
+        assertEquals(0,count_init);
+        this.station.getTime().addOneInterValeNoModif();
+
+
         assertEquals(this.station.getVehicles().size(),2);
         assertFalse(this.station.canBeDropOff());
         assertThrows(StationFullException.class,()-> this.station.dropOffVehicle(this.bike));
+
+        //test time has not been reset because of the exeption
+        assertEquals(1,this.station.getTime().getInterValeNoModif());
     }
 
 
     @Test
     void takeVehicleStationNotEmpty() throws NoVehicleOfThisTypeAvailableException, StationEmptyException, StationFullException {
+
         this.station.dropOffVehicle(this.scooter);
         this.station.dropOffVehicle(this.bike);
         int size_prec = this.station.getVehicles().size();
+
+
+        //test count of station
+        int count_init = this.station.getTime().getInterValeNoModif();
+        assertEquals(0,count_init);
+        this.station.getTime().addOneInterValeNoModif();
 
         assertFalse(this.station.getVehicles().isEmpty());
         assertTrue(this.station.canBeRent());
@@ -61,6 +86,9 @@ class StationTest {
 
         assertEquals(size_prec-this.station.getVehicles().size(),1);
         assertInstanceOf(Bike.class,test1);
+
+        //test time has been reset
+        assertEquals(0,this.station.getTime().getInterValeNoModif());
 
         int size_prec2 = this.station.getVehicles().size();
         assertFalse(this.station.getVehicles().isEmpty());
@@ -102,8 +130,16 @@ class StationTest {
         assertTrue(this.station.getVehicles().isEmpty());
         assertFalse(this.station.canBeRent());
 
+        //test count of station
+        int count_init = this.station.getTime().getInterValeNoModif();
+        assertEquals(0,count_init);
+        this.station.getTime().addOneInterValeNoModif();
+
         assertThrows(StationEmptyException.class,()-> this.station.rentVehicle(v -> v instanceof Bike));
         assertEquals(size_prec,this.station.getVehicles().size());
+
+        //test time has not been reset because of the exeption
+        assertEquals(1,this.station.getTime().getInterValeNoModif());
     }
 
 
