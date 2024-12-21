@@ -1,4 +1,4 @@
-package controlCenter;
+package timeControler;
 
 public class Time {
 

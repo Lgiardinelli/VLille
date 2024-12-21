@@ -1,7 +1,7 @@
 package station;
 
 import controlCenter.ControlCenter;
-import controlCenter.Time;
+import timeControler.Time;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
@@ -9,6 +9,7 @@ import station.stateStation.Empty;
 import station.stateStation.StateStation;
 import station.clientStation.TypeVehicleTest;
 import station.stationVisitor.StationVisitor;
+import timeControler.TimeDedendecies;
 import vehicle.Vehicle;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Random;
 /**
  * Class to manage stations
  */
-public class Station{
+public class Station extends TimeDedendecies{
 
     private final int id;
     protected final List<Vehicle>vehicles;
@@ -69,14 +70,23 @@ public class Station{
      */
     public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
         if(this.canBeDropOff()){
-            this.vehicles.add(vehicle);
-            this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
-            this.updateStateStation();
-            vehicle.addOneNbTimeRented();
+            addVehicleToStation(vehicle);
         }
         else {
             throw new StationFullException();
         }
+    }
+
+    /**
+     * add a vehicle in station and update State,Time, and notify the controlCenter
+     * @param vehicle the vehicle added
+     */
+    private void addVehicleToStation(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+        this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
+        this.updateStateStation();
+        vehicle.addOneNbTimeRented();
+        this.updateTime();
     }
 
     /**
@@ -88,10 +98,7 @@ public class Station{
         if(this.canBeRent()){
             for (Vehicle vehicle : this.getVehicles()) {
                 if (t.testTypeVehicle(vehicle) && vehicle.isRentable()) {
-                    this.getVehicles().remove(vehicle);
-                    this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
-                    this.updateStateStation();
-                    return vehicle;
+                    return removeVehicleFromStation(vehicle);
                 }
             }
             throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
@@ -100,11 +107,23 @@ public class Station{
     }
 
     /**
+     * methode that remove a vehicle from a station and notify is the remove and updateState and the time
+     * @param vehicle the vehicle to remove
+     * @return the vehicle
+     */
+    private Vehicle removeVehicleFromStation(Vehicle vehicle) {
+        this.getVehicles().remove(vehicle);
+        this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
+        this.updateStateStation();
+        this.updateTime();
+        return vehicle;
+    }
+
+    /**
      * Accept or reject visitors to the station
      * @param stationVisitor - Visitor type
-     * @return boolean - True if accepted False otherwise
      */
-    public void accept(StationVisitor stationVisitor) {
+    public void accept(StationVisitor stationVisitor) throws Exception {
         stationVisitor.visit(this);
     }
 
@@ -220,5 +239,10 @@ public class Station{
      */
     public List<ControlCenter> getSubsribers() {
         return subsribers;
+    }
+
+    @Override
+    protected void updateTime() {
+        this.time.resetCount();
     }
 }
