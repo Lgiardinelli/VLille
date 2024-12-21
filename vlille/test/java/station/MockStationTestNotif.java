@@ -9,26 +9,33 @@ import vehicle.Vehicle;
 
 public class MockStationTestNotif extends Station{
 
-    public MockStationTestNotif(ControlCenter c){
-        super();
-        this.addSubscriber(c);
-    }
+    public static final int capacity = 2;
 
     public MockStationTestNotif(){
         super();
+
+    }
+
+    protected int randomCapacityMax() {
+        return capacity;
     }
 
     @Override
     public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
+        this.vehicles.add(vehicle);
         this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
+        this.updateStateStation();
     }
 
 
 
     @Override
     public Vehicle rentVehicle(TypeVehicleTest t) {
+        this.vehicles.removeFirst();
         this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
-        return new Bike(0);
+        this.updateStateStation();
+
+        return null;
     }
 }
 

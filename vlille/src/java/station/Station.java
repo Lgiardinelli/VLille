@@ -174,7 +174,7 @@ public class Station{
     /**
      * update the state of the station after every time a vehicle is taken or dropped
      */
-    private void updateStateStation(){
+    protected void updateStateStation(){
         if(this.vehicles.size() <= 0){
             this.toEmpty();
             this.subsribers.forEach(t -> t.notifyStationEmpty(this));
@@ -188,8 +188,19 @@ public class Station{
         }
     }
 
-
+    /**
+     * setter for the state of the station
+     * @param s the station
+     */
     public void setStateStation(StateStation s){
         this.stateStation = s;
+    }
+
+    /**
+     * getter  for the state of the station
+     * @return the state on the station
+     */
+    public StateStation getStateStation() {
+        return stateStation;
     }
 }

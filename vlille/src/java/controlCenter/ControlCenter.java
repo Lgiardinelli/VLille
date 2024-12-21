@@ -21,6 +21,7 @@ public class ControlCenter implements SubscribeControlCenter {
     private Map<Station, Integer> stations;
     private List<Vehicle> vehicles;
     private RedistributionStrategy strategy;
+    private List<Station> stationToRedistribute;
 
     /**
      * ControlCenter's constructor
@@ -29,22 +30,30 @@ public class ControlCenter implements SubscribeControlCenter {
         this.stations = new HashMap<>();
         this.vehicles = new ArrayList<>();
         this.strategy = new RedistributionRobin();
+        this.stationToRedistribute = new ArrayList<>();
     }
 
     /**
      * ControlCenter's constructor with a non-empty list en predefine station
      */
-    public ControlCenter(List<Station> s){
+    public ControlCenter(List<Station> s) {
         this.stations = new HashMap<>();
         this.vehicles = new ArrayList<>();
         this.strategy = new RedistributionRobin();
-        if(!s.isEmpty()) {
+        this.stationToRedistribute = new ArrayList<>();
+        if (!s.isEmpty()) {
             s.forEach(t -> this.stations.put(t, 0));
+            s.forEach(t -> {
+                if (!t.canBeRent() && t.canBeDropOff() || t.canBeRent() && !t.canBeDropOff()) {
+                    this.stationToRedistribute.add(t);
+                }
+            });
         }
     }
 
     /**
      * Change strategy
+     *
      * @param strategy - new Strategy
      */
     public void setStrategy(RedistributionStrategy strategy) {
@@ -60,6 +69,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * Get number of vehicle to parameter station
+     *
      * @param station - the station
      * @return nb vehicle in this station
      */
@@ -69,6 +79,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * Get map stations
+     *
      * @return the map of all stations
      */
     public Map<Station, Integer> getStations() {
@@ -77,6 +88,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * Add station in list controlCenter
+     *
      * @param station - The station to add
      */
     public void addStationToListControlCenter(Station station) {
@@ -84,28 +96,52 @@ public class ControlCenter implements SubscribeControlCenter {
     }
 
     @Override
-    public void  notifyStationEmpty(Station s) {
-
+    public void notifyStationEmpty(Station s) {
+        this.stationToRedistribute.add(s);
     }
 
     @Override
     public void notifyStationFull(Station s) {
-
+        this.stationToRedistribute.add(s);
     }
 
     @Override
     public void notifyStationVehicleAdded(Station s) {
-
+        if (this.stations.containsKey(s)) {
+            this.stations.put(s, this.stations.get(s) + 1);
+        } else {
+            this.stations.put(s, 1);
+        }
+        this.refreshListRedistribute(s);
     }
+
 
     @Override
     public void notifyStationVehicleTaked(Station s) {
-
+        if (this.stations.containsKey(s)) {
+            this.stations.put(s, this.stations.get(s) - 1);
+        } else {
+            this.stations.put(s, s.getVehicles().size());
+        }
+        this.refreshListRedistribute(s);
     }
 
-    public void addStationInitToTheMap(Station s){
-        this.stations.putIfAbsent(s,0);
+
+    /**
+     * method that remove the station in list station to redistribute because she can't be redistribute anymore
+     *
+     * @param s
+     */
+    private void refreshListRedistribute(Station s) {
+        this.stationToRedistribute.remove(s);
     }
 
 
+    /**
+     * return the list of the vehicle who potentialy need to be redistributed
+     * @return
+     */
+    public List<Station> getStationToRedistribute() {
+        return stationToRedistribute;
+    }
 }
