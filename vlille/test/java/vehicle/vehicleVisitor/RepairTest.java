@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.Station;
 import vehicle.Vehicle;
+import vehicle.stateVehicle.HS;
+import vehicle.stateVehicle.Service;
 import vehicle.vehicleCreator.BikeCreator;
 import vehicle.vehicleCreator.VehicleCreator;
 
@@ -14,8 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RepairTest {
 
@@ -59,8 +60,83 @@ class RepairTest {
     }
 
     @Test
-    public void timerControlTest() {
-        // TODO
+    public void visitBisCannotWorkVehicleTest() throws Exception {
+        // v1 et v2 sont dans le control center, pour le test, on l'appelle depuis repair
+        v1.toHS();
+        repair.visit(v1);
+        v2.toHS();
+        assertThrows(Exception.class, () -> repair.visit(v2));
+    }
+
+    @Test
+    public void visitBisRemoveVehicleTest() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertFalse(controlCenter.getVehicles().contains(v1));
+    }
+
+    @Test
+    public void visitBisResetCountTest() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(repair.getTime().getInterValeNoModif() == 0);
+    }
+
+    @Test
+    public void visitBisVehicleAttributTest() {
+        assertTrue(repair.getVehicle() == null);
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(repair.getVehicle() == v1);
+    }
+
+    @Test
+    public void updateTimeTestPlusOne() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(repair.getTime().getInterValeNoModif() == 0);
+        repair.updateTime();
+        assertTrue(repair.getTime().getInterValeNoModif() == 1);
+    }
+
+    @Test
+    public void updateTimeTestTwoTime() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(repair.getTime().getInterValeNoModif() == 0);
+        repair.updateTime();
+        repair.updateTime();
+        assertTrue(repair.getTime().getInterValeNoModif() == 0);
+    }
+
+    @Test
+    public void vehicleAddedAfterRepairTest() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertFalse(controlCenter.getVehicles().contains(v1));
+        repair.updateTime();
+        repair.updateTime();
+        assertTrue(controlCenter.getVehicles().contains(v1));
+    }
+
+    @Test
+    public void setStateToServiceAfterRepairVehicleTest() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(v1.getState().getClass() == HS.class);
+        repair.updateTime();
+        repair.updateTime();
+        assertTrue(v1.getState().getClass() == Service.class);
+    }
+
+    @Test
+    public void vehicleAttributNullAfterVehicleRepairTest() {
+        v1.toHS();
+        controlCenter.executeEventVehicle(repair);
+        assertTrue(repair.getVehicle() == v1);
+        repair.updateTime();
+        repair.updateTime();
+        assertTrue(repair.getVehicle() == null);
     }
 
 }
