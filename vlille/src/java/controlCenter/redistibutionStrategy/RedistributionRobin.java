@@ -46,7 +46,7 @@ public class RedistributionRobin implements RedistributionStrategy {
         int nbReallocation = station.getCapacityMax() / 2;
         if (isFull) {
             for (int i = 0; i < nbReallocation; i++) {
-                List<Station> filterStation = stations.stream().filter(Station::canBeDropOff).collect(Collectors.toList());
+                List<Station> filterStation = stations.stream().filter(Station::canBeDropOff).toList();
                 if (!filterStation.isEmpty()) {
                     Vehicle vehicle = station.rentVehicle(v -> v instanceof Vehicle);
                     Station s = takeEmptiestStation(filterStation);
