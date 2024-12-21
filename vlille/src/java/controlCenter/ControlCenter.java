@@ -18,7 +18,7 @@ import java.util.*;
 public class ControlCenter implements SubscribeControlCenter {
 
     private Map<Station, Integer> stations;
-    private List<Vehicle> vehicles;
+    private Set<Vehicle> vehicles;
     private RedistributionStrategy strategy;
     private List<Station> stationToRedistribute;
 
@@ -27,7 +27,7 @@ public class ControlCenter implements SubscribeControlCenter {
      */
     public ControlCenter() {
         this.stations = new HashMap<>();
-        this.vehicles = new ArrayList<>();
+        this.vehicles = new HashSet<>();
         this.strategy = new RedistributionRobin();
         this.stationToRedistribute = new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class ControlCenter implements SubscribeControlCenter {
      */
     public ControlCenter(List<Station> s) {
         this.stations = new HashMap<>();
-        this.vehicles = new ArrayList<>();
+        this.vehicles = new HashSet<>();
         this.strategy = new RedistributionRobin();
         this.stationToRedistribute = new ArrayList<>();
         if (!s.isEmpty()) {
@@ -48,6 +48,35 @@ public class ControlCenter implements SubscribeControlCenter {
                 }
             });
         }
+    }
+
+    public ControlCenter(List<Station> s, List<Vehicle> v) {
+        this.stations = new HashMap<>();
+        this.vehicles = new HashSet<>();
+        this.strategy = new RedistributionRobin();
+        this.stationToRedistribute = new ArrayList<>();
+        if (!s.isEmpty()) {
+            s.forEach(t -> this.stations.put(t, 0));
+            s.forEach(t -> {
+                if (!t.canBeRent() && t.canBeDropOff() || t.canBeRent() && !t.canBeDropOff()) {
+                    this.stationToRedistribute.add(t);
+                }
+            });
+        }
+        if (!v.isEmpty())
+            this.vehicles.addAll(v);
+    }
+
+    public void addVehicleList(Vehicle vehicle) {
+        vehicles.add(vehicle);
+    }
+
+    public void removeVehicleList(Vehicle vehicle) {
+        vehicles.remove(vehicle);
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return this.vehicles;
     }
 
     /**
@@ -85,15 +114,6 @@ public class ControlCenter implements SubscribeControlCenter {
         return this.stations;
     }
 
-    /**
-     * Add station in list controlCenter
-     *
-     * @param station - The station to add
-     */
-    public void addStationToListControlCenter(Station station) {
-        // Ne pas oublier d'abonner la station au control center en vérifiant que la station n'est pas dans la map
-    }
-
     @Override
     public void notifyStationEmpty(Station s) {
         this.stationToRedistribute.add(s);
@@ -109,11 +129,10 @@ public class ControlCenter implements SubscribeControlCenter {
         if (this.stations.containsKey(s)) {
             this.stations.put(s, this.stations.get(s) + 1);
         } else {
-            this.stations.put(s, 1);
+            this.stations.put(s, s.getVehicles().size());
         }
         this.refreshListRedistribute(s);
     }
-
 
     @Override
     public void notifyStationVehicleTaked(Station s) {
@@ -125,7 +144,6 @@ public class ControlCenter implements SubscribeControlCenter {
         this.refreshListRedistribute(s);
     }
 
-
     /**
      * method that remove the station in list station to redistribute because she can't be redistribute anymore
      *
@@ -135,13 +153,34 @@ public class ControlCenter implements SubscribeControlCenter {
         this.stationToRedistribute.remove(s);
     }
 
-
     /**
      * return the list of the vehicle who potentialy need to be redistributed
      * @return
      */
     public List<Station> getStationToRedistribute() {
         return stationToRedistribute;
+    }
+
+    public void executeEventVehicle(VehicleVisitor vehicleVisitor) {
+        try {
+            Vehicle vehicle = vehicleFilterCondition(vehicleVisitor);
+            vehicleVisitor.visit(vehicle);
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private Vehicle vehicleFilterCondition(VehicleVisitor vehicleVisitor) throws NullPointerException {
+        Iterator<Vehicle> vehicleIterator = this.vehicles.iterator();
+        while (vehicleIterator.hasNext()) {
+            Vehicle vehicle = vehicleIterator.next();
+            if (vehicleVisitor.filterCondition(vehicle)) {
+                return vehicle;
+            };
+        }
+        throw new NullPointerException();
     }
 
 
