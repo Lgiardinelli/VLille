@@ -40,6 +40,15 @@ public class Station extends TimeDedendecies{
         this.subsribers = new ArrayList<>();
     }
 
+    public Station(ControlCenter controlCenter) {
+        this.id = createId();
+        this.capacityMax = randomCapacityMax();
+        this.vehicles = new ArrayList<>(this.capacityMax);
+        this.stateStation = new Empty(this);
+        this.subsribers = new ArrayList<>();
+        this.subsribers.add(controlCenter);
+    }
+
     /**
      * Get the capacityMax station
      */
