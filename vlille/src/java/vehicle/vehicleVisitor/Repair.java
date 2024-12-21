@@ -11,9 +11,9 @@ import vehicle.stateVehicle.Service;
  */
 public class Repair implements VehicleVisitor {
 
-    Time time = new Time();
-    ControlCenter controlCenter;
-    Vehicle vehicle = null;
+    private Time time = new Time();
+    private ControlCenter controlCenter;
+    private Vehicle vehicle = null;
 
     /**
      * constructor
@@ -22,13 +22,17 @@ public class Repair implements VehicleVisitor {
         this.controlCenter = controlCenter;
     }
 
+    public Time getTime() {
+        return time;
+    }
+
     /** method that visit a vehicle
      * @param vehicle the vehicle to visit
      * @throws Exception - If the repair is working
      */
     @Override
     public void visit(Vehicle vehicle) throws Exception {
-        vehicle.accept(this);
+        // vehicle.accept(this);
         if (canWork()) {
             this.controlCenter.removeVehicleList(vehicle);
             time.resetCount();
@@ -50,7 +54,7 @@ public class Repair implements VehicleVisitor {
     /** method that check if the repair can work
      * @return true if the repair can work, false otherwise
      */
-    public boolean canWork() {
+    private boolean canWork() {
         return this.vehicle == null;
     }
 
