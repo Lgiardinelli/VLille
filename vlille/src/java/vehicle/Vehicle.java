@@ -72,9 +72,7 @@ public abstract class Vehicle {
      * method that accept the visitor and give the station a parameter
      * @param visitor a visitor on objet vehicle
      */
-    public void accept(VehicleVisitor visitor) throws Exception {
-        visitor.visit(this);
-    }
+    public abstract void accept(VehicleVisitor visitor) throws Exception;
 
     /**
      * method that changes the current state to the Service state if its possible

@@ -1,5 +1,7 @@
 package vehicle;
 
+import vehicle.vehicleVisitor.VehicleVisitor;
+
 /**
  * Bike class
  */
@@ -19,5 +21,10 @@ public class Bike extends Vehicle {
     @Override
     protected int nbMaxTimeRented() {
         return 6;
+    }
+
+    @Override
+    public void accept(VehicleVisitor visitor) throws Exception {
+        visitor.visit(this);
     }
 }

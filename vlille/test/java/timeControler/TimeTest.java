@@ -1,4 +1,4 @@
-package controlCenter;
+package timeControler;
 
 import org.junit.jupiter.api.BeforeEach;
 
