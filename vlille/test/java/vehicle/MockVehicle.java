@@ -1,6 +1,7 @@
 package vehicle;
 
 import vehicle.stateVehicle.Service;
+import vehicle.vehicleVisitor.VehicleVisitor;
 
 public class MockVehicle extends Vehicle{
 
@@ -14,6 +15,11 @@ public class MockVehicle extends Vehicle{
     @Override
     public String decorateEquipment() {
         return "";
+    }
+
+    @Override
+    public void accept(VehicleVisitor visitor) throws Exception {
+
     }
 
     @Override

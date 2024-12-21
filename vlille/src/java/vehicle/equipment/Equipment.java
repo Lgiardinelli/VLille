@@ -1,6 +1,7 @@
 package vehicle.equipment;
 
 import vehicle.Vehicle;
+import vehicle.vehicleVisitor.VehicleVisitor;
 
 /**
  * Equipment class.
@@ -21,6 +22,11 @@ public class Equipment extends Vehicle {
     @Override
     public String decorateEquipment() {
         return vehicle.decorateEquipment().contains("with")? String.format("%sand ",vehicle.decorateEquipment()):String.format("%s with ",vehicle.decorateEquipment());
+    }
+
+    @Override
+    public void accept(VehicleVisitor visitor) throws Exception {
+        this.vehicle.accept(visitor);
     }
 
     @Override
