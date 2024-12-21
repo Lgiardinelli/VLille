@@ -6,12 +6,11 @@ import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
 import station.Station;
+import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
+import vehicle.vehicleVisitor.VehicleVisitor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Control center classControl center class
@@ -143,5 +142,41 @@ public class ControlCenter implements SubscribeControlCenter {
      */
     public List<Station> getStationToRedistribute() {
         return stationToRedistribute;
+    }
+
+
+    /**
+     * method which exexute an event of type Station visitor
+     * @param v a visitor of station
+     */
+    public void executeEventStation(StationVisitor v){
+        try{
+            Station station = this.getStationCorrepondingFilter(v);
+            v.visit(station);
+        }
+        catch (NullPointerException e){
+            System.out.println(e);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * extract the first station which correspond to StationVisitor predicate
+     * @param visitor the station visitor
+     * @return  a station corresponding to the predicate
+     * @throws NullPointerException if there is no station corresponding
+     */
+    private Station getStationCorrepondingFilter(StationVisitor visitor) throws NullPointerException{
+        Iterator<Station> t = this.getStations().keySet().iterator();
+
+        while(t.hasNext()){
+            Station station = t.next();
+            if(visitor.predicatTestFilter(station)){
+                return station;
+            }
+        }
+        throw new NullPointerException("aucune station ne corréspond au filtre");
     }
 }

@@ -1,12 +1,13 @@
 package station;
 
 import controlCenter.ControlCenter;
+import controlCenter.Time;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
 import station.stateStation.Empty;
 import station.stateStation.StateStation;
-import station.stationVisitor.TypeVehicleTest;
+import station.clientStation.TypeVehicleTest;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 
@@ -25,6 +26,7 @@ public class Station{
     private StateStation stateStation;
     protected final List<ControlCenter> subsribers;
     private static int id_vec = 0;
+    private final Time time = new Time();
 
     /**
      * Constructor Station
@@ -202,5 +204,21 @@ public class Station{
      */
     public StateStation getStateStation() {
         return stateStation;
+    }
+
+    /**
+     * the time associate a the station
+     * @return a Time object
+     */
+    public Time getTime() {
+        return time;
+    }
+
+    /**
+     * getter for the list of control center
+     * @return the list of control center
+     */
+    public List<ControlCenter> getSubsribers() {
+        return subsribers;
     }
 }
