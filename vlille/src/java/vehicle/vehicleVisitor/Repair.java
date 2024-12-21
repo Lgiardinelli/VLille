@@ -15,7 +15,6 @@ import vehicle.stateVehicle.Service;
  */
 public class Repair extends TimeDependencies implements VehicleVisitor{
 
-    private Time time = new Time();
     private ControlCenter controlCenter;
     private Vehicle vehicle = null;
 
@@ -26,8 +25,12 @@ public class Repair extends TimeDependencies implements VehicleVisitor{
         this.controlCenter = controlCenter;
     }
 
-    public Time getTime() {
-        return time;
+    /**
+     * Get the attribute vehicle
+     * @return the vehicle attribute
+     */
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
     /** method that visit a vehicle
@@ -35,10 +38,9 @@ public class Repair extends TimeDependencies implements VehicleVisitor{
      * @throws Exception - If the repair is working
      */
     public void visitBis(Vehicle vehicle) throws Exception {
-        // vehicle.accept(this);
         if (canWork()) {
             this.controlCenter.removeVehicleList(vehicle);
-            time.resetCount();
+            this.getTime().resetCount();
             this.vehicle = vehicle;
         }
         else
@@ -89,14 +91,14 @@ public class Repair extends TimeDependencies implements VehicleVisitor{
         controlCenter.addVehicleList(this.vehicle);
         vehicle.setState(new Service(this.vehicle));
         this.vehicle = null;
-        time.resetCount();
+        this.getTime().resetCount();
     }
 
     @Override
     protected void updateTime() {
         if (!canWork()) {
-            time.addOneInterValeNoModif();
-            if (time.intervalNoModifSupEqHas(2)) {
+            this.getTime().addOneInterValeNoModif();
+            if (this.getTime().intervalNoModifSupEqHas(2)) {
                 repairVehicle();
             }
         }
