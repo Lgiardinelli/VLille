@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
  */
 public class RedistributionRobin implements RedistributionStrategy{
 
-    Random random = new Random();
-
     @Override
     public void reallocation(Set<Station> stations, Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         if (!station.canBeDropOff())
@@ -37,7 +35,7 @@ public class RedistributionRobin implements RedistributionStrategy{
             }
         }
         else {
-            for (int i=0; i<nbReallocation/2;i++) {
+            for (int i=0; i<nbReallocation;i++) {
                 List<Station> filterStation = stations.stream().filter(s -> (s.canBeRent())).collect(Collectors.toList());
                 if (!filterStation.isEmpty()) {
                     Station s = takeFullestStation(filterStation);
