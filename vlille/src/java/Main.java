@@ -9,6 +9,10 @@ import listchooser.RandomListChooser;
 import listchooser.RandomSetChooser;
 import listchooser.SetChooser;
 import station.Station;
+import station.clientStation.AbstractClientStation;
+import station.clientStation.BikeVisitor;
+import station.clientStation.OverBoardVisitor;
+import station.clientStation.ScooterVisitor;
 import station.stationVisitor.Rober;
 import station.stationVisitor.StationVisitor;
 import vehicle.Overboard;
@@ -33,9 +37,10 @@ public class Main {
     private static final List<VehicleVisitor> workerVec = new ArrayList<>();
     private static final List<Vehicle> rentedVec = new ArrayList<>();
     private static ListChooser<Vehicle> listChooserVehicle = new RandomListChooser<>();
-    private static SetChooser<Vehicle> vehicleSetChooser = new RandomSetChooser<>();
     private static SetChooser<Station> stationSetChooser = new RandomSetChooser<>();
     private static Random random = new Random();
+    private static DisplayerInterface displayer = new ConsoleDisplayer();
+    private static List<AbstractClientStation> clientStations = new ArrayList<>();
 
     private static void roundDropOff() throws StationFullException {
         if(!rentedVec.isEmpty()){
@@ -45,35 +50,57 @@ public class Main {
             }
         }
         else {
-            System.out.println("Aucun véhicule n'a été loué !");
+            System.out.println("Aucun véhicule n'a été loué, donc aucun a été deposé !");
+            System.out.println();
         }
     }
 
-    private static void dropVehicleStationAlea() throws StationFullException {
-        Vehicle vehicle = listChooserVehicle.choose(rentedVec);
-        rentedVec.remove(vehicle);
-        Station station = stationSetChooser.choose(mainControlCenter.getStations().keySet());
-        station.dropOffVehicle(vehicle);
-        System.out.println("Le véhicule " + vehicle.getClass() + " a été déposé à la station " + station.getId());
+    private static void dropVehicleStationAlea() {
+        try {
+            Vehicle vehicle = listChooserVehicle.choose(rentedVec);
+            Station station = stationSetChooser.choose(mainControlCenter.getStations().keySet());
+            station.dropOffVehicle(vehicle);
+            rentedVec.remove(vehicle);
+            displayer.displayDropOffVehicleInformaion(station, vehicle);
+            System.out.println();
+        } catch (StationFullException e) {
+            System.out.println("Station pleine, cheh, volez le vélo de Monsieur Quinton et deposez le votre il est meilleur !");
+        }
+
     }
 
-    private static void roundRent() throws StationEmptyException, NoVehicleOfThisTypeAvailableException {
+    private static void roundRent() {
+        int nbRend = random.nextInt(0, 11);
+        for (int i=0; i<nbRend;i++) {
+            rentVehicleStationAlea();
+        }
+
+    }
+
+    private static void rentVehicleStationAlea() {
+        ListChooser<AbstractClientStation> abstractClientStationListChooser = new RandomListChooser<>();
         Station station = stationSetChooser.choose(mainControlCenter.getStations().keySet());
-        Vehicle vehicle = station.rentVehicle(Vehicle.class::isInstance);
-        rentedVec.add(vehicle);
-        System.out.println("Le vehicule " + vehicle.getClass() + " a été loué dans la station " + station.getId());
+        Vehicle vehicle = abstractClientStationListChooser.choose(clientStations).visit(station);
+        if (vehicle == null) {
+            System.out.println("La station n'a pas de véhicule de ton type, demande à CQ de t'en créer un");
+            System.out.println();
+        }
+        else {
+            rentedVec.add(vehicle);
+            displayer.displayRentVehicleInformaion(station, vehicle);
+            System.out.println();
+        }
     }
 
     private static void roundUpdate(){
-
+        /**
+         * Augmenter temps de tout ce qui dépend du temps +1, refresh list, (station et repareur), creer et remplir ici
+         * Update time de toutes les stations
+         */
     }
 
 
-
-
-    public static void main(String[] arg) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
-
-
+    public static void main(String[] arg) throws StationFullException {
 
         //creation of 90 vehicle
         for(int i=0; i<30;i++){
@@ -109,25 +136,22 @@ public class Main {
                 }
             }
         }
-        allVec.iterator().next().toHS();
-        DisplayerInterface t = new ConsoleDisplayer();
-//        t.displayControlCenter(mainControlCenter);
-//
-//        t.displayStation(allStation.get(2));
+
+        clientStations.add(new ScooterVisitor());
+        clientStations.add(new OverBoardVisitor());
+        clientStations.add(new BikeVisitor());
+
 
         int nb_tour = 0;
-        while(nb_tour < 2){
+        while(nb_tour < 100){
+            System.out.println();
             System.out.println("Tour n°" + nb_tour);
-            t.displayControlCenter(mainControlCenter);
+            displayer.displayControlCenter(mainControlCenter);
             roundDropOff();
             roundRent();
             roundUpdate();
-            t.displayControlCenter(mainControlCenter);
+            displayer.displayControlCenter(mainControlCenter);
             nb_tour++;
         }
-
-
-
-
     }
 }
