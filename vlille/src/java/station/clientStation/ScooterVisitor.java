@@ -1,6 +1,7 @@
 package station.clientStation;
 
 import vehicle.Overboard;
+import vehicle.Scooter;
 
 /**
  * reprend a client who want a Scooter
@@ -9,6 +10,6 @@ public class ScooterVisitor extends AbstractClientStation {
 
     @Override
     protected TypeVehicleTest testMethod() {
-        return v -> v instanceof Overboard;
+        return v -> v instanceof Scooter;
     }
 }
