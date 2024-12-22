@@ -18,10 +18,33 @@ Les utilisateurs peuvent louer ou déposer des véhicules dans une station, et i
 
 Rubrique « HowTo » décrivant les étapes principales :
 - Récupération des sources du projet depuis le dépôt.
+```bash
+git clone https://gitlab-etu.fil.univ-lille.fr/evan.joly.etu/joly_giardinelli_coo.git
+```
 - Génération de la documentation.
+```bash
+mvn javadoc:javadoc
+```
 - Compilation et exécution des sources.
+```bash
+mvn compile
+```
 - Compilation et exécution des tests.
+```bash
+mvn exec:java -Dexec.mainClass="com.example.Main"
+```
+
 - Génération et exécution de l’archive (.jar) du projet.
+```bash
+mvn package
+```
+```bash
+java -jar target/<nom_du_jar>.jar
+```
+- Nettoyage des fichiers générés
+```bash
+mvn clean
+```
 
 ---
 
