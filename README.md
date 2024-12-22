@@ -14,6 +14,43 @@ Les utilisateurs peuvent louer ou déposer des véhicules dans une station, et i
 
 ---
 
+### Ensemble des commandes
+- Compilation
+```bash
+javac -sourcepath src vlille/src/.java -d classes
+```
+
+- Exécution du programme
+```bash
+java -classpath classes java.Main
+```
+
+- Tests compilation
+```bash
+javac -classpath junit-console.jar:classes test/java/*.java
+```
+
+- Javadoc
+```bash
+javadoc -sourcepath src -subpackages java -d docs
+```
+
+- Test exécution
+```bash
+java -jar junit-console.jar -classpath test:classes -scan-classpath
+```
+
+- Jar compilation
+```bash
+jar cvfe main.jar java/Main -C classes .
+```
+
+- Jar exécution
+```bash
+java -jar main.jar
+```
+
+
 ### HowTo
 
 Rubrique « HowTo » décrivant les étapes principales :
@@ -23,7 +60,7 @@ git clone https://gitlab-etu.fil.univ-lille.fr/evan.joly.etu/joly_giardinelli_co
 ```
 - Génération de la documentation.
 ```bash
-mvn javadoc:javadoc
+javadoc -sourcepath src -subpackages -d docs
 ```
 - Compilation et exécution des sources.
 ```bash
@@ -31,7 +68,7 @@ mvn compile
 ```
 - Compilation et exécution des tests.
 ```bash
-mvn exec:java -Dexec.mainClass="com.example.Main"
+mvn exec:java -Dexec.mainClass="com.vlille.test.java"
 ```
 
 - Génération et exécution de l’archive (.jar) du projet.
