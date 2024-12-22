@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RedistributionRandomTest {
     private ControlCenter controlCenter;
     private List<Station> stations = new ArrayList<>();
-    private Station station1 = new Station();
-    private Station station2 = new Station();
+    private Station station1 = new MockStationTestRandom();
+    private Station station2 = new MockStationTestRandom();
     private Vehicle vehicle1;
     private Vehicle vehicle2;
     private VehicleCreator vehicleCreator = new ScooterCreator();

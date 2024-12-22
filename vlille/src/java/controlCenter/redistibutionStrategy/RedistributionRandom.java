@@ -1,15 +1,10 @@
 package controlCenter.redistibutionStrategy;
 
-import controlCenter.ControlCenter;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
 import station.Station;
 import vehicle.Vehicle;
-import vehicle.vehicleCreator.BikeCreator;
-import vehicle.vehicleCreator.ScooterCreator;
-import vehicle.vehicleCreator.VehicleCreator;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,7 +46,7 @@ public class RedistributionRandom implements RedistributionStrategy {
      * @throws NoVehicleOfThisTypeAvailableException if no vehicles of the required type are available for redistribution.
      */
     private void reallocationFullEmpty(Set<Station> stations, Station station, boolean isFull) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
-        int nbRedistribution = random.nextInt(2, 6);
+        int nbRedistribution = random.nextInt(1, station.getCapacityMax());
         for (int i = 0; i < nbRedistribution; i++)
             reallocationAlea(stations, station, isFull);
     }
@@ -70,9 +65,9 @@ public class RedistributionRandom implements RedistributionStrategy {
         if (isFull) {
             List<Station> filterStation = stations.stream().filter(Station::canBeDropOff).collect(Collectors.toList());
             if (!filterStation.isEmpty()) {
-                Vehicle vehicle = station.getVehicle();
+                Vehicle vehicle = station.rentVehicle(Vehicle.class::isInstance);
                 Station s = filterStation.get(random.nextInt(filterStation.size()));
-                station.dropOffVehicle(vehicle);
+                s.dropOffVehicle(vehicle);
             }
         } else {
             List<Station> filterStation = stations.stream().filter(Station::canBeRent).collect(Collectors.toList());
@@ -82,41 +77,5 @@ public class RedistributionRandom implements RedistributionStrategy {
                 station.dropOffVehicle(vehicle);
             }
         }
-    }
-
-    /**
-     * Main method to demonstrate the `RedistributionRandom` strategy.
-     *
-     * @param args command-line arguments (not used).
-     * @throws StationFullException if a station cannot accommodate more vehicles.
-     * @throws StationEmptyException if a station has no vehicles to redistribute.
-     * @throws NoVehicleOfThisTypeAvailableException if no vehicles of the required type are available for redistribution.
-     */
-    public static void main(String[] args) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
-        List<Station> stations = new ArrayList<>();
-        Station s1 = new Station();
-        Station s2 = new Station();
-        stations.add(s1);
-        stations.add(s2);
-
-        VehicleCreator v1 = new BikeCreator();
-        VehicleCreator v2 = new ScooterCreator();
-        s1.dropOffVehicle(v1.createVehicle());
-        s1.dropOffVehicle(v2.createVehicle());
-        s1.dropOffVehicle(v2.createVehicle());
-        s1.dropOffVehicle(v2.createVehicle());
-        s1.dropOffVehicle(v2.createVehicle());
-        s1.dropOffVehicle(v2.createVehicle());
-
-        System.out.println(s1.getVehicles());
-        System.out.println(s2.getVehicles());
-
-        ControlCenter controlCenter = new ControlCenter(stations);
-
-        controlCenter.setStrategy(new RedistributionRandom());
-        controlCenter.executeStrategy(s2);
-
-        System.out.println(s1.getVehicles());
-        System.out.println(s2.getVehicles());
     }
 }
