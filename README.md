@@ -33,17 +33,20 @@ javadoc -sourcepath src -subpackages -d docs
 ```bash
 mvn compile
 ```
+```bash
+mvn exec:java
+```
 - Compilation et exécution des tests.
 ```bash
-mvn exec:java -Dexec.mainClass="com.vlille.test.java"
+mvn test
 ```
 
 - Génération et exécution de l’archive (.jar) du projet.
 ```bash
-mvn package
+jar cvfe joly-giardinelli-coo.jar Main -C target/classes .
 ```
 ```bash
-java -jar target/<nom_du_jar>.jar
+java -jar joly-giardinelli-coo.jar
 ```
 - Nettoyage des fichiers générés
 ```bash
