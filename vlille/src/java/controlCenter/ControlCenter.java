@@ -154,6 +154,10 @@ public class ControlCenter implements SubscribeControlCenter {
         return stationToRedistribute;
     }
 
+    /**
+     * Executes a vehicle-related event defined by the provided visitor.
+     * @param vehicleVisitor the visitor defining the vehicle event
+     */
     public void executeEventVehicle(VehicleVisitor vehicleVisitor) {
         try {
             Vehicle vehicle = vehicleFilterCondition(vehicleVisitor);
@@ -165,6 +169,12 @@ public class ControlCenter implements SubscribeControlCenter {
         }
     }
 
+    /**
+     * Filters the first vehicle that matches the visitor's condition.
+     * @param vehicleVisitor the visitor with the filter condition
+     * @return a vehicle matching the condition
+     * @throws NullPointerException if no vehicle matches the condition
+     */
     private Vehicle vehicleFilterCondition(VehicleVisitor vehicleVisitor) throws NullPointerException {
         Iterator<Vehicle> vehicleIterator = this.vehicles.iterator();
         while (vehicleIterator.hasNext()) {
