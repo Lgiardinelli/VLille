@@ -151,7 +151,11 @@ Sachant que, comme pour le visiteur de station, ils n'ont de visiteur que le nom
 #### Time
 
 Pour la gestion du temps, nous avons créé un objet time qui permet de gerer les intervalles de temps nottament pour le répareur et la redistribution.  
-pour faire cela, il fallait avoir des objets qui dépendent du temps, c'est pour cela que nous avons utilisé la classe TimeDepedency dont tout les objets qui dépendent du temps étendent celle-ci, avec une méthode updateTime qui permet de gerer les updatesq.
+pour faire cela, il fallait avoir des objets qui dépendent du temps, c'est pour cela que nous avons utilisé la classe TimeDepedency dont tout les objets qui dépendent du temps étendent celle-ci, avec une méthode updateTime qui permet de gerer les updates.
+
+#### Displayer
+
+On a creer une interface commune qui gere les display, ce qui permet l'ouverture du code et donc de creer plusieurs différents type d'affichage.
 
 ---
 
