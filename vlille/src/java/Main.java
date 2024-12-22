@@ -106,14 +106,14 @@ public class Main {
 
     public static void main(String[] arg) throws StationFullException {
 
-        //creation of 90 vehicle
-        for(int i=0; i<30;i++){
+        //creation of 30 vehicle
+        for(int i=0; i<10;i++){
             allVec.add(bc.createVehicle());
         }
-        for(int i=0; i<30;i++){
+        for(int i=0; i<10;i++){
             allVec.add(oc.createVehicle());
         }
-        for(int i=0; i<30;i++){
+        for(int i=0; i<10;i++){
             allVec.add(sc.createVehicle());
         }
 
@@ -134,7 +134,7 @@ public class Main {
 
         Iterator<Vehicle> x = allVec.iterator();
         for(int i = 0; i < 10;i++){
-            for(int j = 0; j < 7;j++){
+            for(int j = 0; j < 3;j++){
                 if(x.hasNext()){
                     allStation.get(i).dropOffVehicle(x.next());
                 }
