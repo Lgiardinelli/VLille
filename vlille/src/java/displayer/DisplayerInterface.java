@@ -6,6 +6,9 @@ import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 import vehicle.vehicleVisitor.VehicleVisitor;
 
+/**
+ * Interface displayer
+ */
 public interface DisplayerInterface {
 
     /**
@@ -39,16 +42,16 @@ public interface DisplayerInterface {
     void displayStationVisitor(StationVisitor visitor,Station station);
 
     /**
-     * display the information when a vehicle is drop to a station
-     * @param station a station
-     * @param vehicle a vehicle
+     * Method displayDropOffVehicleInformaion
+     * @param station - the station to information
+     * @param vehicle - the vehicle information
      */
     void displayDropOffVehicleInformaion(Station station, Vehicle vehicle);
 
     /**
-     * display the information when a vehicle is rent from a station
-     * @param station a station
-     * @param vehicle a vehicle
+     * Mathod displayRentVehicleInformaion
+     * @param station - the station information
+     * @param vehicle - the vehicle information
      */
     void displayRentVehicleInformaion(Station station, Vehicle vehicle);
 

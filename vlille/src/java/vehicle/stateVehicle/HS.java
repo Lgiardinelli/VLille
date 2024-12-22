@@ -8,6 +8,10 @@ import vehicle.Vehicle;
  */
 public class HS extends AbstractStateVehicle implements StateVehicle{
 
+    /**
+     * Constructor state hs
+     * @param v - the vehicle state
+     */
     public HS(Vehicle v) {
         super(v);
     }

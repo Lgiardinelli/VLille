@@ -13,6 +13,9 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class displayer console
+ */
 public class ConsoleDisplayer implements DisplayerInterface{
 
     @Override

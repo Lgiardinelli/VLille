@@ -8,7 +8,10 @@ import vehicle.Vehicle;
  */
 public class Service extends AbstractStateVehicle implements StateVehicle{
 
-
+    /**
+     * Cosntructor
+     * @param v - The vehicle
+     */
     public Service(Vehicle v) {
         super(v);
     }

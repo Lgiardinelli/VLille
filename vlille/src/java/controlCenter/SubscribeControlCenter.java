@@ -2,6 +2,9 @@ package controlCenter;
 
 import station.Station;
 
+/**
+ * interface SubscribeControlCenter
+ */
 public interface SubscribeControlCenter {
     /**
      * Notify the control center that a station is empty

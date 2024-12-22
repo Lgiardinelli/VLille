@@ -2,8 +2,15 @@ package station.stateStation;
 
 import station.Station;
 
+/**
+ * Class normal extend state station
+ */
 public class Normal extends StateStation {
 
+    /**
+     * Constructor Normal state
+     * @param s - the station state
+     */
     public Normal(Station s){
         super(s);
     }

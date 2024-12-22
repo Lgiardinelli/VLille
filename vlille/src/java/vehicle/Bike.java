@@ -6,8 +6,10 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  * Bike class
  */
 public class Bike extends Vehicle {
+
     /**
-     * Bike constructor
+     * The bike constructor
+     * @param id - int - the id bike
      */
     public static final int maxNbTimeRented = 6;
 

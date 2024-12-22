@@ -7,6 +7,10 @@ import vehicle.Vehicle;
  */
 public class Robed extends AbstractStateVehicle implements StateVehicle{
 
+    /**
+     * Constructor of robed
+     * @param v - the vehicle robed
+     */
     public Robed(Vehicle v) {
         super(v);
     }

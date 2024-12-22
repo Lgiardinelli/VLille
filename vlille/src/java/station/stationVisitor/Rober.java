@@ -24,7 +24,8 @@ public class Rober implements StationVisitor {
 
     /**
      * method which allows you to visit the station
-     * @param station - Station<Vehicle> The station visited
+     * @param station - The station visited
+     * @throws Exception - Exception
      */
     @Override
     public void visit(Station station) throws Exception {

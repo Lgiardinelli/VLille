@@ -9,7 +9,8 @@ public class Overboard extends Vehicle {
 
     public static final int maxNbTimeRented = 2;
     /**
-     * Overboard constructor
+     * Constructor overboard
+     * @param id - the id
      */
     public Overboard(int id) {
         super(id);

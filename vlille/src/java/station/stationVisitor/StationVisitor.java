@@ -8,8 +8,9 @@ import vehicle.Vehicle;
  */
 public interface StationVisitor {
     /**
-     * method which allows you to visit the station
-     * @param station - Station<Vehicle> la station visité
+     * visit a vehicle
+     * @param station the station to visit
+     * @throws Exception if an error occurs during the visit
      */
     void visit(Station station) throws Exception;
 

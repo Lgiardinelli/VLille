@@ -14,6 +14,10 @@ public abstract class Vehicle {
     private int nbTimeRented;
     private StateVehicle state;
 
+    /**
+     * Constructor of vehicle
+     * @param id - the id
+     */
     public Vehicle(int id){
         this.id = id;
         this.nbTimeRented = 0;
@@ -47,12 +51,14 @@ public abstract class Vehicle {
 
     /**
      * method that allows to decorate our vehicle with different equipment
+     * @return - The string to the decorator
      */
     public abstract String decorateEquipment();
 
     /**
      * method that accept the visitor and give the station a parameter
      * @param visitor a visitor on objet vehicle
+     * @throws Exception - if the vehicle don't accept
      */
     public abstract void accept(VehicleVisitor visitor) throws Exception;
 

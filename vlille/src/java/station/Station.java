@@ -20,11 +20,18 @@ import java.util.Random;
  */
 public class Station extends TimeDependencies {
 
-    private final int id;
+
+    /**
+     * List of the vehicle
+     */
     protected final List<Vehicle>vehicles;
+    /**
+     * List of subscriber
+     */
+    protected final List<ControlCenter> subsribers;
+    private final int id;
     private final int capacityMax;
     private StateStation stateStation;
-    protected final List<ControlCenter> subsribers;
     private static int id_vec = 0;
 
     /**
@@ -49,6 +56,7 @@ public class Station extends TimeDependencies {
 
     /**
      * Get the capacityMax station
+     * @return the capacityMax station
      */
     public int getCapacityMax() {
         return capacityMax;
@@ -74,6 +82,7 @@ public class Station extends TimeDependencies {
     /**
      * Add a vehicle to the station
      * @param vehicle - The vehicle to be added
+     * @throws StationFullException - if the station is full
      */
     public void dropOffVehicle(Vehicle vehicle) throws StationFullException {
         if(this.canBeDropOff()){
@@ -99,7 +108,10 @@ public class Station extends TimeDependencies {
 
     /**
      * take a vehicle from the station if possible
-     *  @throws NoVehicleOfThisTypeAvailableException - if there is no vehicle of this type
+     * @param t - The vehicle
+     * @return - The vehicle rented
+     * @throws NoVehicleOfThisTypeAvailableException - if there is no vehicle of this type
+     * @throws StationEmptyException - If the station is empty
      */
     public Vehicle rentVehicle(TypeVehicleTest t) throws NoVehicleOfThisTypeAvailableException, StationEmptyException {
 
@@ -131,6 +143,7 @@ public class Station extends TimeDependencies {
     /**
      * Accept or reject visitors to the station
      * @param stationVisitor - Visitor type
+     * @throws Exception - Exception
      */
     public void accept(StationVisitor stationVisitor) throws Exception {
         stationVisitor.visit(this);
@@ -168,14 +181,16 @@ public class Station extends TimeDependencies {
 
     /**
      * can the station rent any type of vehicle
-     * return boolean - true or false
+     * @return boolean - true or false
      */
     public boolean canBeRent() {
         return this.stateStation.canBeRent();
     }
 
-
-
+    /**
+     * Get vehicles list
+     * @return the list vehicles
+     */
     public List<Vehicle> getVehicles() {
         return vehicles;
     }
@@ -197,6 +212,10 @@ public class Station extends TimeDependencies {
         this.subsribers.remove(controlCenter);
     }
 
+    /**
+     * Get the vehicle
+     * @return the vehicle
+     */
     public Vehicle getVehicle(){
         return this.vehicles.getFirst();
     }

@@ -9,7 +9,8 @@ public class Scooter extends Vehicle {
 
     public static final int maxNbTimeRented = 4;
     /**
-     * Scooter constructor
+     * Constructor scooter
+     * @param id - the id
      */
     public Scooter(int id) {
         super(id);

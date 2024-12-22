@@ -27,6 +27,9 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 
 import java.util.*;
 
+/**
+ * Class main
+ */
 public class Main {
 
     private static final HashSet<Vehicle> allVec = new HashSet<>();
@@ -44,6 +47,10 @@ public class Main {
     private static List<AbstractClientStation> clientStations = new ArrayList<>();
     private static List<TimeDependencies> timeDependencies = new ArrayList<>();
 
+    /**
+     * The cycle depot tour
+     * @throws StationFullException - if the station is full
+     */
     private static void roundDropOff() throws StationFullException {
         if(!rentedVec.isEmpty()){
             int nbDropOff = random.nextInt(1,rentedVec.size()+1);
@@ -57,6 +64,9 @@ public class Main {
         }
     }
 
+    /**
+     * The tour to rent bikes
+     */
     private static void dropVehicleStationAlea() {
         try {
             Vehicle vehicle = listChooserVehicle.choose(rentedVec);
@@ -71,6 +81,9 @@ public class Main {
 
     }
 
+    /**
+     * The trick to update the behavior
+     */
     private static void roundRent() {
         int nbRend = random.nextInt(0, 11);
         for (int i=0; i<nbRend;i++) {
@@ -79,6 +92,9 @@ public class Main {
 
     }
 
+    /**
+     * rents a vehicle randomly
+     */
     private static void rentVehicleStationAlea() {
         ListChooser<AbstractClientStation> abstractClientStationListChooser = new RandomListChooser<>();
         Station station = stationSetChooser.choose(mainControlCenter.getStations().keySet());
@@ -90,6 +106,9 @@ public class Main {
         }
     }
 
+    /**
+     * Update the round
+     */
     private static void roundUpdate(){
         timeDependencies.forEach(t -> t.getTime().addOneInterValeNoModif());
         timeDependencies.forEach(t -> t.updateTime());
@@ -99,7 +118,11 @@ public class Main {
         displayer.displayControlCenter(mainControlCenter);
     }
 
-
+    /**
+     * The execute main
+     * @param arg - arg
+     * @throws StationFullException - Exception if the station is full
+     */
     public static void main(String[] arg) throws StationFullException {
 
         //creation of 30 vehicle
