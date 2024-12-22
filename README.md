@@ -33,11 +33,12 @@ Rubrique « HowTo » décrivant les étapes principales :
 
 - **Stratégie de redistribution** (deux méthodes, une aléatoire et l'autre round robin).
 - **Un observeur** pour la notification des stations au controlCenter.
-- **Deux visitors** de station (les visiteurs tels que voleur et les visiteurs du type de véhicule pour louer un type de véhicule souhaité).
+- **Un visitors** de station (les visiteurs tels que voleur) qui n'est pas vraiment un visiteur car agi toujours sur un même type de station.
+- **Un ClientStation** qui est un peu comme un visiteur mais que n'a pas de méthode accept car visit uniquement le même type de station 
 - **Un état de chaque station**.
 - **Un décorateur de véhicule** (panier, etc...).
 - **Un état des véhicules**.
-- **Un builder** pour la création de véhicules.
+- **Un builder** pour la création de véhicules notamment géré des id unique.
 - **Un visitor de véhicule** (par exemple pour le réparateur).
 
 ##### Strategy de Redistribution
@@ -52,6 +53,34 @@ Pour équilibrer les véhicules entre stations, deux stratégies principales de 
   - **Stations pleines** : Une station pleine redistribue la moitié de sa capacité maximale, véhicule par véhicule, vers les stations les plus vides parmi les autres.
   - **Stations vides** : Une station vide reçoit des véhicules un par un, jusqu'à atteindre la moitié de sa capacité maximale, en provenance des stations les plus pleines.
 
+
+##### L'obersever
+
+Afin de gérer les différentes notifications qu'une station peut envoyer au ControlCenter, comme un ajout, un véhicule qui est loué, lorsque qu'une station est pleine ou vide, et donc mettre à jour les différents attributs de notre Control Center.
+
+##### Les visiteurs de station et de vehicle
+
+Nous avons décidé de gérer séparément les différentes actions que l'on pourrait réaliser sur des stations et des véhicules grâce au visiteur. Dans l'implémentation, seul le VehicleVisitor est un vrai visiteur, car il peut agir différemment selon le type de véhicule qu'il va visiter. Dans le cas des stations, c'est juste une classe qui permet de gérer des événements sur des stations. Toutes ces actions sont ensuite gérées dans le ControlCenter, qui peut, grâce à des méthodes dédiées à chaque événement, lancer tout type d'événement sur les stations et sur les véhicules.
+##### Client Station
+
+Un point clé du projet était de gérer les différents véhicules dans la station : comment les retirer, avoir le type de véhicule que l'on veut, etc.
+
+Pour réaliser cela, nous avions au départ pensé à ajouter un état dans Station qui gérerait quel type de véhicule on voulait renvoyer avec rentVehicle. Or, cela n'avait pas trop de sens de donner la responsabilité à la station de renvoyer tel type de véhicule.
+
+C'est pour cela que nous avons décidé à la base de gérer cela comme un visiteur de Station, dont la méthode visit nous permettrait de renvoyer le véhicule du type souhaité selon le visiteur choisi. Or, ces deux visiteurs n'avaient rien à voir, car les deux ne devaient pas forcément implémenter les mêmes méthodes.
+
+Au final, nous avons donc séparé ce visiteur et l'avons placé dans un package à part entière. Ce visiteur permet donc de retirer un véhicule du type que l'on veut et de le récupérer. Pour faire cela, nous utilisons une interface anonyme avec une méthode de test qui effectue un instanceof pour vérifier la présence d'un véhicule voulu dans une station.
+
+Sachant que, comme pour le visiteur de station, ils n'ont de visiteur que le nom, car ils ne se comportent pas réellement de la même manière.
+
+
+##### Etat station
+
+Les etats des stations sont au nombre de 3, il nous permete gere le cas ou elle sont vide, pleine ou aucun des deux, et donc d'adapter les differente méthode de la classe en fonction de l'etat de la station comment savoir si on peut louer un vehicle ou si elle vide et donc que rien ne peut être loué.
+
+##### Vehicle Equipement
+
+Afin de géré les equipement dans le vehicle nous avons utiliser un decorateur, ce decorateura ajoute au fur et a mesure des eencapsulation différent equipement affiché dans une chaine de caractère 
 
 ---
 
