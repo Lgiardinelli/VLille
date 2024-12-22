@@ -11,7 +11,6 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 public abstract class Vehicle {
 
     private int id;
-    private Station station;
     private int nbTimeRented;
     private StateVehicle state;
 
@@ -28,23 +27,6 @@ public abstract class Vehicle {
     public boolean isRentable(){
         return this.state.isRentable();
     }
-
-    /**
-     * getter for the station attribute
-     * @return a station
-     */
-    public Station getStation() {
-        return station;
-    }
-
-    /**
-     * a setter for the station attribute
-     * @param station a station
-     */
-    public void setStation(Station station) {
-        this.station = station;
-    }
-
 
     /**
      * getter for the NbTimeRented attribute

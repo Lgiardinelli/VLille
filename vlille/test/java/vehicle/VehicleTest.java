@@ -46,17 +46,6 @@ abstract class VehicleTest {
         assertFalse(vehicle.isRentable());
     }
 
-    @Test
-    void getStationTest() {
-        vehicle.setStation(station);
-        assertEquals(vehicle.getStation(), station);
-    }
-
-    @Test
-    void setStationTest() {
-        vehicle.setStation(station);
-        assertEquals(vehicle.getStation(), station);
-    }
     /*
     @Test
     void getNbTimeRentedTest() {
