@@ -89,6 +89,7 @@ public class Station extends TimeDependencies {
      * @param vehicle the vehicle added
      */
     private void addVehicleToStation(Vehicle vehicle) {
+        this.subsribers.forEach(c -> c.addVehicleList(vehicle));
         this.vehicles.add(vehicle);
         this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
         this.updateStateStation();
@@ -119,6 +120,7 @@ public class Station extends TimeDependencies {
      * @return the vehicle
      */
     private Vehicle removeVehicleFromStation(Vehicle vehicle) {
+        this.subsribers.forEach(c -> c.removeVehicleList(vehicle));
         this.getVehicles().remove(vehicle);
         this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
         this.updateStateStation();
@@ -207,7 +209,7 @@ public class Station extends TimeDependencies {
             this.toEmpty();
             this.subsribers.forEach(t -> t.notifyStationEmpty(this));
 
-        } else if (this.vehicles.size() == this.capacityMax) {
+        } else if (this.vehicles.size() >= this.capacityMax) {
             this.toFull();
             this.subsribers.forEach(t -> t.notifyStationFull(this));
         }
