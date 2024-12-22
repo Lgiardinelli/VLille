@@ -126,14 +126,47 @@ class ControlCenterTest {
     void testExecuteEventVehicleKo() throws StationFullException {
         // L'exception n'est pas levé car elle est géré avec un catch
         Station station1 = new Station();
-        station1.addSubscriber(controlCenter);
+        MockControlCenterTestExecuteVec c = new MockControlCenterTestExecuteVec();
+        //verification exepxtion has not been lauch before
+        int count_init = MockControlCenterTestExecuteVec.call_Null_point;
+        assertEquals(0,count_init);
+
+        //add subcriber and vehicle to station
+        station1.addSubscriber(c);
         station1.dropOffVehicle(bike);
         station1.dropOffVehicle(overboard);
-        Repair repair = new Repair(controlCenter);
-        controlCenter.executeEventVehicle(repair);
-        overboard.toHS();
-        controlCenter.executeEventVehicle(repair);
-        bike.toHS();
-        controlCenter.executeEventVehicle(repair);
+        Repair repair = new Repair(c);
+
+        //execute the event who must lauch the exeption
+        c.executeEventVehicle(repair);
+        assertEquals(1,count_init+MockControlCenterTestExecuteVec.call_Null_point);
+
+
+    }
+
+    @Test
+    void testExecuteVisitThrowError() throws StationFullException {
+        // L'exception n'est pas levé car elle est géré avec un catch
+        Station station1 = new Station();
+        MockControlCenterTestExecuteVec c = new MockControlCenterTestExecuteVec();
+        //verification exepxtion has not been lauch before
+        int count_init = MockControlCenterTestExecuteVec.call_Exep_point;
+        assertEquals(0,count_init);
+
+        //add subcriber and vehicle to station
+        station1.addSubscriber(c);
+        station1.dropOffVehicle(bike);
+        station1.dropOffVehicle(overboard);
+        this.bike.toHS();
+        this.overboard.toHS();
+        Repair repair = new Repair(c);
+
+        //execute the event who the first one don't lauch exeption
+        c.executeEventVehicle(repair);
+        assertEquals(0,count_init+MockControlCenterTestExecuteVec.call_Exep_point);
+
+        //the second one lauch exeption because the Vehicle visitor do something
+        c.executeEventVehicle(repair);
+        assertEquals(1,MockControlCenterTestExecuteVec.call_Exep_point);
     }
 }

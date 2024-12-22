@@ -40,7 +40,6 @@ public class Repair extends TimeDependencies implements VehicleVisitor{
     public void visitBis(Vehicle vehicle) throws Exception {
         if (canWork()) {
             this.controlCenter.removeVehicleList(vehicle);
-            this.getTime().resetCount();
             this.vehicle = vehicle;
         }
         else

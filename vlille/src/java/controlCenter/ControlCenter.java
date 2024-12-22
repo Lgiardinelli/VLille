@@ -175,7 +175,7 @@ public class ControlCenter implements SubscribeControlCenter {
      * @return a vehicle matching the condition
      * @throws NullPointerException if no vehicle matches the condition
      */
-    private Vehicle vehicleFilterCondition(VehicleVisitor vehicleVisitor) throws NullPointerException {
+    protected Vehicle vehicleFilterCondition(VehicleVisitor vehicleVisitor) throws NullPointerException {
         Iterator<Vehicle> vehicleIterator = this.vehicles.iterator();
         while (vehicleIterator.hasNext()) {
             Vehicle vehicle = vehicleIterator.next();

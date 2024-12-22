@@ -24,7 +24,7 @@ abstract class  VehicleCreatorTest {
         Vehicle u = this.v.createVehicle();
         Vehicle x = this.v.createVehicle();
 
-        assertNotEquals(u.getId(),x.getId());
+        assertTrue(u.getId()<x.getId());
     }
 
     @Test
@@ -33,7 +33,7 @@ abstract class  VehicleCreatorTest {
         Vehicle u = this.v.createVehicle();
         Vehicle x = t.createVehicle();
 
-        assertNotEquals(u.getId(),x.getId());
+        assertTrue(u.getId()<x.getId());
     }
 
 }
