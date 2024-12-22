@@ -41,6 +41,8 @@ class RedistributionRobinTest {
     @Test
     public void testRedistributionFull() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         assertTrue(station1.getVehicles().size() == 2);
+        List<Station> filterStation = stations.stream().filter(s -> !s.equals(station1)).filter(Station::canBeDropOff).toList();
+        filterStation.forEach(t ->assertTrue(t.canBeDropOff()));
         controlCenter.setStrategy(new RedistributionRobin());
         controlCenter.executeStrategyOnStation(station1);
         assertTrue(station1.getVehicles().size() == 1);
