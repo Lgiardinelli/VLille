@@ -13,6 +13,7 @@ import station.stateStation.Empty;
 import station.stateStation.Full;
 import station.stationVisitor.MockStationVisitor;
 import station.stationVisitor.StationVisitor;
+import timeControler.TimeDependencies;
 import vehicle.Bike;
 import vehicle.Overboard;
 import vehicle.Scooter;
@@ -267,6 +268,50 @@ class ControlCenterTest {
 
         assertTrue(c.getStationToRedistribute().contains(station1));
         assertFalse(c.getStationToRedistribute().contains(station));
+    }
+
+
+    @Test
+    void testRedistribution() throws StationFullException {
+        Station s1 = new Station();
+        Station s2 = new Station();
+        List<Station> test= new ArrayList<>();
+        test.add(s1);
+        test.add(s2);
+        ControlCenter c1 = new ControlCenter(test);
+
+
+        //test redistribution with 2 station and 2 vehicle
+
+
+        s2.dropOffVehicle(this.bike);
+        s2.dropOffVehicle(this.overboard);
+
+        //gestion time
+        List<TimeDependencies> t= new ArrayList<>();
+        t.add(s1);
+        t.add(s2);
+
+        t.forEach(x -> x.getTime().addOneInterValeNoModif());
+        t.forEach(x -> x.getTime().addOneInterValeNoModif());
+
+        assertEquals(2,s1.getTime().getInterValeNoModif());
+        assertEquals(2,s2.getTime().getInterValeNoModif());
+        assertEquals(2,c1.getStations().get(s2));
+        assertEquals(0,c1.getStations().get(s1));
+        assertTrue(c1.getStationToRedistribute().contains(s1));
+
+
+        c1.executeStrategyRedistribution();
+
+        assertEquals(0,s1.getTime().getInterValeNoModif());
+        assertEquals(0,s2.getTime().getInterValeNoModif());
+        assertEquals(0,c1.getStations().get(s2));
+        assertEquals(2,c1.getStations().get(s1));
+        assertFalse(c1.getStationToRedistribute().contains(s1));
+
+        assertTrue(s1.getVehicles().contains(this.bike) ||s1.getVehicles().contains(this.overboard));
+
     }
 
 

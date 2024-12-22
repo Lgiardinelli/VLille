@@ -1,5 +1,8 @@
 package station.stationVisitor;
 
+import exeption.CantBeRobeException;
+import exeption.NoVehicleOfThisTypeAvailableException;
+import exeption.StationEmptyException;
 import station.Station;
 import vehicle.Vehicle;
 
@@ -29,19 +32,18 @@ public class Rober implements StationVisitor {
     /**
      * Steal the vehicle from the station
      * @param station - The stolen station
+     * @throws CantBeRobeException if the vehicle in station is HS
+     * @throws StationEmptyException if the station isEmpty can't append because of the filter
+     * @throws NoVehicleOfThisTypeAvailableException can't append cause we took any type of vehicle
      */
-    private void robStation(Station station) throws Exception {
+    private void robStation(Station station) throws CantBeRobeException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         if(this.canBeRobe(station)){
             Vehicle vec = station.getVehicle();
-            station.getVehicles().remove(vec);
-            station.getSubsribers().forEach(t -> {
-                t.notifyStationEmpty(station);
-                t.notifyStationVehicleTaked(station);
-            });
+            station.rentVehicle(t -> t instanceof Vehicle);
             vec.toRobed();
         }
         else{
-            throw new Exception("This vehicle is not stealable cause he is HS");
+            throw new CantBeRobeException("This vehicle is not stealable cause he is HS");
         }
     }
 
@@ -50,7 +52,7 @@ public class Rober implements StationVisitor {
      * @param s a station
      * @return a boolean
      */
-    private boolean canBeRobe(Station s){
+    public boolean canBeRobe(Station s){
         return  s.getVehicle().isRentable();
     }
 
