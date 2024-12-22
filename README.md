@@ -147,4 +147,4 @@ Sachant que, comme pour le visiteur de station, ils n'ont de visiteur que le nom
 
 ### UML
 
-(UML à insérer)
+![Texte alternatif](./uml.png)
