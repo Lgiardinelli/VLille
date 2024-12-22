@@ -46,7 +46,7 @@ public class RedistributionRobin implements RedistributionStrategy {
         int nbReallocation = station.getCapacityMax() / 2;
         if (isFull) {
             for (int i = 0; i < nbReallocation; i++) {
-                List<Station> filterStation = stations.stream().filter(Station::canBeDropOff).toList();
+                List<Station> filterStation = stations.stream().filter(s -> !s.equals(station)).filter(Station::canBeDropOff).toList();
                 if (!filterStation.isEmpty()) {
                     Vehicle vehicle = station.rentVehicle(v -> v instanceof Vehicle);
                     Station s = takeEmptiestStation(filterStation);
@@ -55,11 +55,14 @@ public class RedistributionRobin implements RedistributionStrategy {
             }
         } else {
             for (int i = 0; i < nbReallocation; i++) {
-                List<Station> filterStation = stations.stream().filter(Station::canBeRent).collect(Collectors.toList());
+                List<Station> filterStation = stations.stream().filter(s -> !s.equals(station)).filter(Station::canBeRent).collect(Collectors.toList());
                 if (!filterStation.isEmpty()) {
                     Station s = takeFullestStation(filterStation);
                     Vehicle vehicle = s.rentVehicle(v -> v instanceof Vehicle);
                     station.dropOffVehicle(vehicle);
+                }
+                else {
+                    break;
                 }
             }
         }
