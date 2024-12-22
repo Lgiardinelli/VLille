@@ -2,6 +2,10 @@
 
 ## GIARDINELLI Léo & JOLY Evan
 
+## ATTENTION ! 
+## **LE PROJET COMPILE AVEC JAVA 22 ET AVEC MAVEN**
+## ATTENTION !
+
 ### Introduction sur le sujet du projet
 
 Le projet consiste à mettre en œuvre les différents design patterns vus en cours et à les appliquer dans un cadre concret.  
@@ -13,43 +17,6 @@ Chaque station contient un nombre aléatoire maximum de véhicules, compris entr
 Les utilisateurs peuvent louer ou déposer des véhicules dans une station, et ils peuvent choisir le type de véhicule qu'ils souhaitent louer.
 
 ---
-
-### Ensemble des commandes
-- Compilation
-```bash
-javac -sourcepath src vlille/src/.java -d classes
-```
-
-- Exécution du programme
-```bash
-java -classpath classes java.Main
-```
-
-- Tests compilation
-```bash
-javac -classpath junit-console.jar:classes test/java/*.java
-```
-
-- Javadoc
-```bash
-javadoc -sourcepath src -subpackages java -d docs
-```
-
-- Test exécution
-```bash
-java -jar junit-console.jar -classpath test:classes -scan-classpath
-```
-
-- Jar compilation
-```bash
-jar cvfe main.jar java/Main -C classes .
-```
-
-- Jar exécution
-```bash
-java -jar main.jar
-```
-
 
 ### HowTo
 
