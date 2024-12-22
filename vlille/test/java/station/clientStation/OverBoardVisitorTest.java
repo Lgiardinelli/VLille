@@ -3,8 +3,6 @@ package station.clientStation;
 import vehicle.Overboard;
 import vehicle.Vehicle;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class OverBoardVisitorTest extends AbstractClientStationTest {
 
     @Override

@@ -1,6 +1,5 @@
 package station.clientStation;
 
-import vehicle.Overboard;
 import vehicle.Scooter;
 
 /**

@@ -3,8 +3,6 @@ package station.clientStation;
 import vehicle.Bike;
 import vehicle.Vehicle;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BikeVisitorTest extends AbstractClientStationTest {
 
     @Override

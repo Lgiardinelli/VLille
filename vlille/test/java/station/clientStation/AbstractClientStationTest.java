@@ -4,7 +4,6 @@ import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.Station;
-import vehicle.Bike;
 import vehicle.Vehicle;
 
 import static org.junit.jupiter.api.Assertions.*;
