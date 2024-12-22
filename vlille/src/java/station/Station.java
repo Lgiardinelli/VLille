@@ -94,7 +94,7 @@ public class Station extends TimeDependencies {
         this.subsribers.forEach(t -> t.notifyStationVehicleAdded(this));
         this.updateStateStation();
         vehicle.addOneNbTimeRented();
-        this.updateTime();
+        this.resetTimeSation();
     }
 
     /**
@@ -124,7 +124,7 @@ public class Station extends TimeDependencies {
         this.getVehicles().remove(vehicle);
         this.subsribers.forEach(x -> x.notifyStationVehicleTaked(this));
         this.updateStateStation();
-        this.updateTime();
+        this.resetTimeSation();
         return vehicle;
     }
 
@@ -244,6 +244,13 @@ public class Station extends TimeDependencies {
 
     @Override
     protected void updateTime() {
+
+    }
+
+    /**
+     * reset the time of the station
+     */
+    private void resetTimeSation(){
         this.getTime().resetCount();
     }
 
