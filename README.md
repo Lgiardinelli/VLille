@@ -148,6 +148,11 @@ Au final, nous avons donc séparé ce visiteur et l'avons placé dans un package
 Pour faire cela, nous utilisons une interface anonyme avec une méthode de test qui effectue un instanceof pour vérifier la présence d'un véhicule voulu dans une station.  
 Sachant que, comme pour le visiteur de station, ils n'ont de visiteur que le nom, car ils ne se comportent pas réellement de la même manière.
 
+#### Time
+
+Pour la gestion du temps, nous avons créé un objet time qui permet de gerer les intervalles de temps nottament pour le répareur et la redistribution.  
+pour faire cela, il fallait avoir des objets qui dépendent du temps, c'est pour cela que nous avons utilisé la classe TimeDepedency dont tout les objets qui dépendent du temps étendent celle-ci, avec une méthode updateTime qui permet de gerer les updatesq.
+
 ---
 
 ### UML
