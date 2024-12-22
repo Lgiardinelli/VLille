@@ -243,7 +243,7 @@ public class Station extends TimeDependencies {
     }
 
     @Override
-    protected void updateTime() {
+    public void updateTime() {
 
     }
 

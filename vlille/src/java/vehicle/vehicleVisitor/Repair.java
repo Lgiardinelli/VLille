@@ -13,7 +13,7 @@ import vehicle.stateVehicle.Service;
 /**
  * class Repair
  */
-public class Repair extends TimeDependencies implements VehicleVisitor{
+public class Repair extends TimeDependencies implements VehicleVisitor {
 
     private ControlCenter controlCenter;
     private Vehicle vehicle = null;
@@ -94,9 +94,9 @@ public class Repair extends TimeDependencies implements VehicleVisitor{
     }
 
     @Override
-    protected void updateTime() {
+    public void updateTime() {
         if (!canWork()) {
-            this.getTime().addOneInterValeNoModif();
+            // this.getTime().addOneInterValeNoModif();
             if (this.getTime().intervalNoModifSupEqHas(2)) {
                 repairVehicle();
             }
