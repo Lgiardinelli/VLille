@@ -11,7 +11,7 @@ public abstract class TimeDependencies {
     /**
      * method that force Objet dependent to time to define a method to update time each interval
      */
-    protected abstract void updateTime();
+    public abstract void updateTime();
 
     /**
      * the time associate to Time dependent object
