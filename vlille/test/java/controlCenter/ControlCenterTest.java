@@ -1,5 +1,6 @@
 package controlCenter;
 
+import controlCenter.redistibutionStrategy.MockControlCenterTestFilterStation;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
@@ -10,12 +11,14 @@ import station.MockStationTestRandom;
 import station.Station;
 import station.stateStation.Empty;
 import station.stateStation.Full;
+import station.stationVisitor.MockStationVisitor;
+import station.stationVisitor.StationVisitor;
 import vehicle.Bike;
 import vehicle.Overboard;
 import vehicle.Scooter;
 import vehicle.Vehicle;
+import vehicle.stateVehicle.HS;
 import vehicle.vehicleVisitor.Repair;
-import vehicle.vehicleVisitor.VehicleVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ class ControlCenterTest {
     private Bike bike;
     private Scooter scooter;
     private Overboard overboard;
+    private MockControlCenterTestFilterStation cf;
+    private MockControlCenterTestExecuteThowsVecAndStation ce;
 
     @BeforeEach
     void setUp() {
@@ -37,10 +42,13 @@ class ControlCenterTest {
         this.station = new MockStationTestNotif();
         t.add(station);
         this.controlCenter = new ControlCenter(t);
-        this.station.addSubscriber(controlCenter);
+
         this.bike = new Bike(0);
         this.scooter = new Scooter(0);
         this.overboard = new Overboard(0);
+
+        this.ce = new MockControlCenterTestExecuteThowsVecAndStation();
+        this.cf = new MockControlCenterTestFilterStation();
     }
 
     @Test
@@ -65,7 +73,7 @@ class ControlCenterTest {
     void notifyStationVehicleTakedTestOk() throws Exception {
         Station test = new MockStationTestNotif();
         test.addSubscriber(controlCenter);
-        station.dropOffVehicle(bike);
+        this.station.dropOffVehicle(this.overboard);
         test.getVehicles().add(bike);
 
         //if the station is already in the map
@@ -126,20 +134,19 @@ class ControlCenterTest {
     void testExecuteEventVehicleKo() throws StationFullException {
         // L'exception n'est pas levé car elle est géré avec un catch
         Station station1 = new Station();
-        MockControlCenterTestExecuteVec c = new MockControlCenterTestExecuteVec();
         //verification exepxtion has not been lauch before
-        int count_init = MockControlCenterTestExecuteVec.call_Null_point;
+        int count_init = this.ce.call_Null_point;
         assertEquals(0,count_init);
 
         //add subcriber and vehicle to station
-        station1.addSubscriber(c);
+        station1.addSubscriber(ce);
         station1.dropOffVehicle(bike);
         station1.dropOffVehicle(overboard);
-        Repair repair = new Repair(c);
+        Repair repair = new Repair(ce);
 
         //execute the event who must lauch the exeption
-        c.executeEventVehicle(repair);
-        assertEquals(1,count_init+MockControlCenterTestExecuteVec.call_Null_point);
+        ce.executeEventVehicle(repair);
+        assertEquals(1,count_init+ this.ce.call_Null_point);
 
 
     }
@@ -148,25 +155,119 @@ class ControlCenterTest {
     void testExecuteVisitThrowError() throws StationFullException {
         // L'exception n'est pas levé car elle est géré avec un catch
         Station station1 = new Station();
-        MockControlCenterTestExecuteVec c = new MockControlCenterTestExecuteVec();
         //verification exepxtion has not been lauch before
-        int count_init = MockControlCenterTestExecuteVec.call_Exep_point;
+        int count_init = this.ce.call_Exep_point;
         assertEquals(0,count_init);
 
         //add subcriber and vehicle to station
-        station1.addSubscriber(c);
+        station1.addSubscriber(ce);
         station1.dropOffVehicle(bike);
         station1.dropOffVehicle(overboard);
         this.bike.toHS();
         this.overboard.toHS();
-        Repair repair = new Repair(c);
+        Repair repair = new Repair(ce);
 
         //execute the event who the first one don't lauch exeption
-        c.executeEventVehicle(repair);
-        assertEquals(0,count_init+MockControlCenterTestExecuteVec.call_Exep_point);
+        ce.executeEventVehicle(repair);
+        assertEquals(0,count_init+ this.ce.call_Exep_point);
 
         //the second one lauch exeption because the Vehicle visitor do something
-        c.executeEventVehicle(repair);
-        assertEquals(1,MockControlCenterTestExecuteVec.call_Exep_point);
+        ce.executeEventVehicle(repair);
+        assertEquals(1, this.ce.call_Exep_point);
     }
+
+    @Test
+    void testExecuteEventStationOK() throws StationFullException {
+
+        // create a station with vehicle
+        Station station1 = new Station();
+        station1.addSubscriber(cf);
+        station1.dropOffVehicle(bike);
+        station1.dropOffVehicle(overboard);
+
+
+        // 2 station
+        Station station2 = new Station();
+        station2.addSubscriber(cf);
+        station2.dropOffVehicle(new Overboard(9));
+
+        //mock return and use is effect only on station with 2 vehicle or more and turn hs the first bike
+        StationVisitor visitor = new MockStationVisitor();
+
+        assertEquals(2,cf.getStations().size());
+
+        cf.executeEventStation(visitor);
+
+        //the good station returned
+        assertSame(MockControlCenterTestFilterStation.stationGet,station1);
+        // the first vehicle now hs
+        assertInstanceOf(HS.class,station1.getVehicle().getState());
+
+    }
+    @Test
+    void testExecuteEventStationKONoVehicleFiltered() throws StationFullException {
+        //verification exepxtion has not been lauch before
+        int count_init = this.ce.call_Null_point;
+        assertEquals(0,count_init);
+
+        // create a station with vehicle
+        Station station1 = new Station();
+        station1.addSubscriber(ce);
+        station1.dropOffVehicle(bike);
+
+        // 2 station
+        Station station2 = new Station();
+        station2.addSubscriber(ce);
+        station2.dropOffVehicle(new Overboard(9));
+        StationVisitor visitor = new MockStationVisitor();
+
+        //execute the event who must lauch the exeption
+        ce.executeEventStation(visitor);
+        assertEquals(1,count_init+ this.ce.call_Null_point);
+    }
+
+    @Test
+    void testExecuteVisitStationThrowError() throws StationFullException {
+
+        //verification exepxtion has not been lauch before
+        int count_init = this.ce.call_Exep_point;
+        assertEquals(0,count_init);
+
+        // create a station with vehicle
+        Station station1 = new Station();
+        station1.addSubscriber(ce);
+        station1.dropOffVehicle(bike);
+        station1.dropOffVehicle(overboard);
+        station1.dropOffVehicle(new Scooter(8));
+
+        StationVisitor visitor = new MockStationVisitor();
+
+        //execute the event who must lauch the exeption cant work cause the vehilceVisior himself throw an error
+        ce.executeEventStation(visitor);
+        assertEquals(1,count_init+ this.ce.call_Exep_point);
+    }
+
+    @Test
+    void testControleCenterConstructorStation() throws StationFullException {
+
+        List<Station> stations= new ArrayList<>();
+        //creation of a station without  vehicle
+        Station station1 = new Station();
+        stations.add(station1);
+        //creation of a station with 1 vehicle
+        this.station.dropOffVehicle(this.bike);
+        stations.add(this.station);
+
+
+        ControlCenter c = new ControlCenter(stations);
+
+        assertEquals(c.getStations().size(),stations.size());
+        assertEquals(0,c.getStations().get(station1));
+        assertEquals(1,c.getStations().get(station));
+
+        assertTrue(c.getStationToRedistribute().contains(station1));
+        assertFalse(c.getStationToRedistribute().contains(station));
+    }
+
+
 }

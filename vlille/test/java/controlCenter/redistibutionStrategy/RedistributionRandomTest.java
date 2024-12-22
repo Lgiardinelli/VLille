@@ -41,7 +41,7 @@ class RedistributionRandomTest {
     public void testRedistributionFull() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         assertTrue(nbVehicleStation() == 2);
         controlCenter.setStrategy(new RedistributionRandom());
-        controlCenter.executeStrategy(station1);
+        controlCenter.executeStrategyOnStation(station1);
         assertTrue(nbVehicleStation() == 2);
     }
 
@@ -49,7 +49,7 @@ class RedistributionRandomTest {
     public void testRedistributionEmpty() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         assertTrue(nbVehicleStation() == 2);
         controlCenter.setStrategy(new RedistributionRandom());
-        controlCenter.executeStrategy(station2);
+        controlCenter.executeStrategyOnStation(station2);
         assertTrue(nbVehicleStation() == 2);
     }
 

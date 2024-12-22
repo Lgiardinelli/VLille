@@ -6,6 +6,8 @@ import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
 import station.Station;
+import station.stateStation.Empty;
+import station.stateStation.Full;
 import station.stationVisitor.StationVisitor;
 import vehicle.Vehicle;
 import vehicle.vehicleVisitor.VehicleVisitor;
@@ -41,11 +43,12 @@ public class ControlCenter implements SubscribeControlCenter {
         this.strategy = new RedistributionRobin();
         this.stationToRedistribute = new ArrayList<>();
         if (!s.isEmpty()) {
-            s.forEach(t -> this.stations.put(t, 0));
+            s.forEach(t -> this.stations.put(t, t.getVehicles().size()));
             s.forEach(t -> {
-                if (!t.canBeRent() && t.canBeDropOff() || t.canBeRent() && !t.canBeDropOff()) {
+                if ((t.getStateStation() instanceof Full) || (t.getStateStation() instanceof Empty)) {
                     this.stationToRedistribute.add(t);
                 }
+                t.addSubscriber(this);
             });
         }
     }
@@ -82,10 +85,27 @@ public class ControlCenter implements SubscribeControlCenter {
     }
 
     /**
-     * Execute the strategy
+     * Execute the strategy on one station
+     * @param station station to be redistributed
      */
-    public void executeStrategy(Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
+    public void executeStrategyOnStation(Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         this.strategy.reallocation(stations.keySet(), station);
+    }
+
+    /**
+     * execute the redistribution on all the vehicle which can be redistribuate
+     */
+    public void executeStrategyRedistribution(){
+        try {
+            List<Station> stationRedistibutionAvailable = this.stationToRedistribute.stream().filter(t -> t.getTime().intervalNoModifSupEqHas(2)).toList();
+            while (!stationRedistibutionAvailable.isEmpty()) {
+                this.executeStrategyOnStation(stationRedistibutionAvailable.getFirst());
+                stationRedistibutionAvailable = this.stationToRedistribute.stream().filter(t -> t.getTime().intervalNoModifSupEqHas(2)).toList();
+            }
+        }
+        catch (Exception e){
+            System.out.println("Grave erreur");
+        }
     }
 
     /**
@@ -210,7 +230,7 @@ public class ControlCenter implements SubscribeControlCenter {
      * @return  a station corresponding to the predicate
      * @throws NullPointerException if there is no station corresponding
      */
-    private Station getStationCorrepondingFilter(StationVisitor visitor) throws NullPointerException{
+    protected Station getStationCorrepondingFilter(StationVisitor visitor) throws NullPointerException{
         Iterator<Station> t = this.getStations().keySet().iterator();
 
         while(t.hasNext()){

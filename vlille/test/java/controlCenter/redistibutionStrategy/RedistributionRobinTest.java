@@ -42,7 +42,7 @@ class RedistributionRobinTest {
     public void testRedistributionFull() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         assertTrue(station1.getVehicles().size() == 2);
         controlCenter.setStrategy(new RedistributionRobin());
-        controlCenter.executeStrategy(station1);
+        controlCenter.executeStrategyOnStation(station1);
         assertTrue(station1.getVehicles().size() == 1);
     }
 
@@ -50,7 +50,7 @@ class RedistributionRobinTest {
     public void testRedistributionEmpty() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         assertTrue(station2.getVehicles().size() == 0);
         controlCenter.setStrategy(new RedistributionRobin());
-        controlCenter.executeStrategy(station2);
+        controlCenter.executeStrategyOnStation(station2);
         assertTrue(station2.getVehicles().size() == 1);
     }
 }
