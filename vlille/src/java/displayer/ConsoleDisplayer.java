@@ -103,6 +103,18 @@ public class ConsoleDisplayer implements DisplayerInterface{
     }
 
     @Override
+    public void displayDropOffVehicleInformaion(Station station, Vehicle vehicle) {
+        displayVehicle(vehicle);
+        System.out.println("Ce véhicule a été déposé à la station " + station.getId());
+    }
+
+    @Override
+    public void displayRentVehicleInformaion(Station station, Vehicle vehicle) {
+        displayVehicle(vehicle);
+        System.out.println("Ce véhicule a été loué à la station " + station.getId());
+    }
+
+    @Override
     public void displayVehicle(Vehicle v) {
         System.out.printf("->Vehicle number : %d information : %s\n",v.getId(),v.decorateEquipment());
     }

@@ -38,4 +38,8 @@ public interface DisplayerInterface {
      */
     void displayStationVisitor(StationVisitor v);
 
+    void displayDropOffVehicleInformaion(Station station, Vehicle vehicle);
+
+    void displayRentVehicleInformaion(Station station, Vehicle vehicle);
+
 }
