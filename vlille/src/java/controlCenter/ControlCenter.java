@@ -36,6 +36,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * ControlCenter's constructor with a non-empty list en predefine station
+     * @param s - The list station
      */
     public ControlCenter(List<Station> s) {
         this.stations = new HashMap<>();
@@ -53,6 +54,10 @@ public class ControlCenter implements SubscribeControlCenter {
         }
     }
 
+    /**
+     * The constructor ControlCenter
+     * @param v - The List of vehicules
+     */
     public ControlCenter(Set<Vehicle> v) {
         this.stations = new HashMap<>();
         this.vehicles = new HashSet<>();
@@ -63,14 +68,26 @@ public class ControlCenter implements SubscribeControlCenter {
             this.vehicles.addAll(v);
     }
 
+    /**
+     * Add the vehicle on the list
+     * @param vehicle - The added vehicle
+     */
     public void addVehicleList(Vehicle vehicle) {
         vehicles.add(vehicle);
     }
 
+    /**
+     * Remove the vehicle on the list
+     * @param vehicle - The removed vehicle
+     */
     public void removeVehicleList(Vehicle vehicle) {
         vehicles.remove(vehicle);
     }
 
+    /**
+     * Get the vehicles list
+     * @return - the vehicle list
+     */
     public Set<Vehicle> getVehicles() {
         return this.vehicles;
     }
@@ -87,6 +104,9 @@ public class ControlCenter implements SubscribeControlCenter {
     /**
      * Execute the strategy on one station
      * @param station station to be redistributed
+     * @throws StationFullException - exception StationFullException
+     * @throws StationEmptyException - exception StationEmptyException
+     * @throws NoVehicleOfThisTypeAvailableException - exception NoVehicleOfThisTypeAvailableException
      */
     public void executeStrategyOnStation(Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
         this.strategy.reallocation(stations.keySet(), station);
@@ -159,8 +179,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * method that remove the station in list station to redistribute because she can't be redistribute anymore
-     *
-     * @param s
+     * @param s - the station
      */
     private void refreshListRedistribute(Station s) {
         this.stationToRedistribute.remove(s);
@@ -168,7 +187,7 @@ public class ControlCenter implements SubscribeControlCenter {
 
     /**
      * return the list of the vehicle who potentialy need to be redistributed
-     * @return
+     * @return the list station to redistribuate
      */
     public List<Station> getStationToRedistribute() {
         return stationToRedistribute;

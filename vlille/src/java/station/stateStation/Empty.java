@@ -2,9 +2,15 @@ package station.stateStation;
 
 import station.Station;
 
+/**
+ * Class empty state
+ */
 public class Empty extends StateStation {
 
-
+    /**
+     * Constructor empty
+     * @param s - the station of state
+     */
     public Empty(Station s){
         super(s);
     }

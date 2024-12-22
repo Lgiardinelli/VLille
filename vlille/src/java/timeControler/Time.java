@@ -2,6 +2,9 @@ package timeControler;
 
 import station.Station;
 
+/**
+ * Class Time
+ */
 public class Time {
 
     private int interValeNoModif;

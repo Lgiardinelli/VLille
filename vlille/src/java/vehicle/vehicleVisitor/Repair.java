@@ -19,7 +19,8 @@ public class Repair extends TimeDependencies implements VehicleVisitor {
     private Vehicle vehicle = null;
 
     /**
-     * constructor
+     * Constructor repair
+     * @param controlCenter - controlCenter
      */
     public Repair(ControlCenter controlCenter) {
         this.controlCenter = controlCenter;

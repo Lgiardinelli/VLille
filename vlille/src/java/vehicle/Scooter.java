@@ -8,7 +8,8 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 public class Scooter extends Vehicle {
 
     /**
-     * Scooter constructor
+     * Constructor scooter
+     * @param id - the id
      */
     public Scooter(int id) {
         super(id);

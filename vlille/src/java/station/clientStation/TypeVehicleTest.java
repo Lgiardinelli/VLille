@@ -2,6 +2,9 @@ package station.clientStation;
 
 import vehicle.Vehicle;
 
+/**
+ * Interface TypeVehicleTest
+ */
 public interface TypeVehicleTest {
     /**
      * test if the vehicle have the good instance

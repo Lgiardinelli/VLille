@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Class RandomSetChooser
+ * @param <T> - the type of list
+ */
 public class RandomSetChooser<T> implements SetChooser<T> {
     private static final Random RANDOM = new Random();
 

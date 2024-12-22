@@ -5,11 +5,15 @@ import exeption.StationEmptyException;
 import station.Station;
 import vehicle.Vehicle;
 
+/**
+ * The abstract client station class
+ */
 public abstract class AbstractClientStation {
 
     /**
      * visit a station a take a vehicle of the type wanted
      * @param station the station selected to take a vehicle
+     * @return Vehicle - The vehicle visit if is ok else return null
      */
     public Vehicle visit(Station station) {
         try {

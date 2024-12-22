@@ -7,8 +7,15 @@ import station.Station;
  */
 public abstract class StateStation {
 
+    /**
+     * The station
+     */
     protected Station s;
 
+    /**
+     * Constructor of statestation
+     * @param s - The station test
+     */
     public StateStation(Station s){
         this.s = s;
     }

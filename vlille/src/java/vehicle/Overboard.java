@@ -8,7 +8,8 @@ import vehicle.vehicleVisitor.VehicleVisitor;
 public class Overboard extends Vehicle {
 
     /**
-     * Overboard constructor
+     * Constructor overboard
+     * @param id - the id
      */
     public Overboard(int id) {
         super(id);

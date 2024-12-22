@@ -2,8 +2,15 @@ package station.stateStation;
 
 import station.Station;
 
+/**
+ * Class full state
+ */
 public class Full extends StateStation {
 
+    /**
+     * Constructor full state
+     * @param s - the station state
+     */
     public Full(Station s){
         super(s);
     }
