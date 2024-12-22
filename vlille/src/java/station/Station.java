@@ -244,4 +244,12 @@ public class Station extends TimeDependencies {
     protected void updateTime() {
         this.getTime().resetCount();
     }
+
+    /**
+     * getter for the station id
+     * @return an id
+     */
+    public int getId() {
+        return id;
+    }
 }

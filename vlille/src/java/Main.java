@@ -1,4 +1,7 @@
 import controlCenter.ControlCenter;
+import displayer.ConsoleDisplayer;
+import displayer.DisplayerInterface;
+import exeption.StationFullException;
 import station.Station;
 import station.stationVisitor.Rober;
 import station.stationVisitor.StationVisitor;
@@ -11,9 +14,7 @@ import vehicle.vehicleCreator.ScooterCreator;
 import vehicle.vehicleVisitor.Repair;
 import vehicle.vehicleVisitor.VehicleVisitor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -42,7 +43,7 @@ public class Main {
 
 
 
-    public static void main(String[] arg){
+    public static void main(String[] arg) throws StationFullException {
 
 
 
@@ -71,12 +72,28 @@ public class Main {
         for(int i=0; i<4;i++){
             workerVec.add(new Repair(mainControlCenter));
         }
-        int nb_tour = 0;
-        while(nb_tour < 20){
-            roundDropOff();
-            roundRent();
-            roundUpdate();
+
+        Iterator<Vehicle> x = allVec.iterator();
+        for(int i = 0; i < 10;i++){
+            for(int j = 0; j < 7;j++){
+                if(x.hasNext()){
+                    allStation.get(i).dropOffVehicle(x.next());
+                }
+            }
         }
+        allVec.iterator().next().toHS();
+        DisplayerInterface t = new ConsoleDisplayer();
+        t.displayControlCenter(mainControlCenter);
+
+        t.displayStation(allStation.get(2));
+
+//        int nb_tour = 0;
+//        while(nb_tour < 20){
+//            roundDropOff();
+//            roundRent();
+//            roundUpdate();
+//        }
+
 
 
 
