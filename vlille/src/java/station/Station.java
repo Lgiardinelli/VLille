@@ -80,7 +80,7 @@ public class Station extends TimeDependencies {
             addVehicleToStation(vehicle);
         }
         else {
-            throw new StationFullException();
+            throw new StationFullException("Station is Full, dropOffVehicle cancel");
         }
     }
 
@@ -109,9 +109,9 @@ public class Station extends TimeDependencies {
                     return removeVehicleFromStation(vehicle);
                 }
             }
-            throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station");
+            throw new NoVehicleOfThisTypeAvailableException("No vehicle of this type in the station, rentVehicle cancel");
         }
-        throw new StationEmptyException();
+        throw new StationEmptyException("Station is empty,rentVehicle cancel");
     }
 
     /**

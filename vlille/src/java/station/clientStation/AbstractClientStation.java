@@ -1,5 +1,7 @@
 package station.clientStation;
 
+import displayer.ConsoleDisplayer;
+import displayer.DisplayerInterface;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import station.Station;
@@ -7,6 +9,8 @@ import vehicle.Vehicle;
 
 public abstract class AbstractClientStation {
 
+
+    private final DisplayerInterface diplayer = new ConsoleDisplayer();
     /**
      * visit a station a take a vehicle of the type wanted
      * @param station the station selected to take a vehicle
@@ -14,10 +18,8 @@ public abstract class AbstractClientStation {
     public Vehicle visit(Station station) {
         try {
             return station.rentVehicle(this.testMethod());
-        } catch (NoVehicleOfThisTypeAvailableException e) {
-            System.out.println(e);
-        } catch (StationEmptyException e) {
-            System.out.println(e);
+        } catch (NoVehicleOfThisTypeAvailableException | StationEmptyException e) {
+            diplayer.displayExeption(e.getMessage());
         }
         return null;
     }

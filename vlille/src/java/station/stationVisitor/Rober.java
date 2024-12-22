@@ -1,5 +1,7 @@
 package station.stationVisitor;
 
+import displayer.ConsoleDisplayer;
+import displayer.DisplayerInterface;
 import exeption.CantBeRobeException;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
@@ -11,7 +13,7 @@ import vehicle.Vehicle;
  */
 public class Rober implements StationVisitor {
 
-
+     private final DisplayerInterface displayerInterface = new ConsoleDisplayer();
      private static final int NB_VEHICLE_NEEDED_TO_ROBE = 1;
     /**
      * Rober's constructor
@@ -41,6 +43,8 @@ public class Rober implements StationVisitor {
             Vehicle vec = station.getVehicle();
             station.rentVehicle(t -> t instanceof Vehicle);
             vec.toRobed();
+            displayerInterface.displayStationVisitor(this,station);
+
         }
         else{
             throw new CantBeRobeException("This vehicle is not stealable cause he is HS");

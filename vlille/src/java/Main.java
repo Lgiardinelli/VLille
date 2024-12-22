@@ -66,7 +66,7 @@ public class Main {
             displayer.displayDropOffVehicleInformaion(station, vehicle);
             System.out.println();
         } catch (StationFullException e) {
-            System.out.println("Station pleine, cheh, volez le vélo de Monsieur Quinton et deposez le votre il est meilleur !");
+            displayer.displayExeption(e.getMessage());
         }
 
     }
@@ -83,11 +83,7 @@ public class Main {
         ListChooser<AbstractClientStation> abstractClientStationListChooser = new RandomListChooser<>();
         Station station = stationSetChooser.choose(mainControlCenter.getStations().keySet());
         Vehicle vehicle = abstractClientStationListChooser.choose(clientStations).visit(station);
-        if (vehicle == null) {
-            System.out.println("La station n'a pas de véhicule de ton type, demande à CQ de t'en créer un");
-            System.out.println();
-        }
-        else {
+        if (vehicle != null) {
             rentedVec.add(vehicle);
             displayer.displayRentVehicleInformaion(station, vehicle);
             System.out.println();
@@ -164,5 +160,6 @@ public class Main {
             displayer.displayControlCenter(mainControlCenter);
             nb_tour++;
         }
+        System.out.println("Station pleine, cheh, volez le vélo de Monsieur Quinton et deposez le votre il est meilleur !");
     }
 }

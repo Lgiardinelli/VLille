@@ -98,8 +98,10 @@ public class ConsoleDisplayer implements DisplayerInterface{
 
 
     @Override
-    public void displayStationVisitor(StationVisitor v) {
-
+    public void displayStationVisitor(StationVisitor visitor,Station station) {
+        System.out.println("---------------------------------------------------------------");
+        System.out.printf("%s as do is action on Station, id : %d\n",visitor.getClass(),station.getId());
+        System.out.println("---------------------------------------------------------------");
     }
 
     @Override
@@ -115,12 +117,38 @@ public class ConsoleDisplayer implements DisplayerInterface{
     }
 
     @Override
+    public void displayExeption(String message) {
+        System.out.printf("%s : l'action a été annuler\n",message);
+        System.out.println();
+    }
+
+    @Override
+    public void displayRedistributionInit(Station s) {
+        System.out.println("---------------------------------------------------------------");
+        System.out.printf("-> The station number %d, going to be redistributed\n",s.getId());
+        System.out.println("Before redistribution");
+        this.displayStation(s);
+        System.out.println("---------------------------------------------------------------");
+    }
+
+    @Override
+    public void displayRedistributionEnd(Station s) {
+        System.out.println("---------------------------------------------------------------");
+        System.out.printf("-> The station number %d, has been redistribute\n",s.getId());
+        System.out.println("after redistribution");
+        this.displayStation(s);
+        System.out.println("---------------------------------------------------------------");
+    }
+
+    @Override
     public void displayVehicle(Vehicle v) {
         System.out.printf("->Vehicle number : %d information : %s\n",v.getId(),v.decorateEquipment());
     }
 
     @Override
-    public void displayVehicleVisitor(VehicleVisitor v) {
-
+    public void displayVehicleVisitor(VehicleVisitor visitor,Vehicle vehicle) {
+        System.out.println("---------------------------------------------------------------");
+        System.out.printf("%s as do is action on %s, id : %d\n",visitor.getClass(),vehicle.decorateEquipment(),vehicle.getId());
+        System.out.println("---------------------------------------------------------------");
     }
 }

@@ -1,6 +1,8 @@
 package vehicle.vehicleVisitor;
 
 import controlCenter.ControlCenter;
+import displayer.ConsoleDisplayer;
+import displayer.DisplayerInterface;
 import timeControler.Time;
 import timeControler.TimeDependencies;
 import vehicle.Bike;
@@ -17,7 +19,7 @@ public class Repair extends TimeDependencies implements VehicleVisitor {
 
     private ControlCenter controlCenter;
     private Vehicle vehicle = null;
-
+    private final DisplayerInterface displayerInterface = new ConsoleDisplayer();
     /**
      * constructor
      */
@@ -89,8 +91,10 @@ public class Repair extends TimeDependencies implements VehicleVisitor {
     private void repairVehicle() {
         controlCenter.addVehicleList(this.vehicle);
         vehicle.setState(new Service(this.vehicle));
+        displayerInterface.displayVehicleVisitor(this,vehicle);
         this.vehicle = null;
         this.getTime().resetCount();
+
     }
 
     @Override

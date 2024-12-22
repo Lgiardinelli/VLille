@@ -2,6 +2,8 @@ package controlCenter;
 
 import controlCenter.redistibutionStrategy.RedistributionRobin;
 import controlCenter.redistibutionStrategy.RedistributionStrategy;
+import displayer.ConsoleDisplayer;
+import displayer.DisplayerInterface;
 import exeption.NoVehicleOfThisTypeAvailableException;
 import exeption.StationEmptyException;
 import exeption.StationFullException;
@@ -23,7 +25,7 @@ public class ControlCenter implements SubscribeControlCenter {
     private Set<Vehicle> vehicles;
     private RedistributionStrategy strategy;
     private List<Station> stationToRedistribute;
-
+    private final DisplayerInterface displayer= new ConsoleDisplayer();
     /**
      * ControlCenter's constructor
      */
@@ -89,7 +91,9 @@ public class ControlCenter implements SubscribeControlCenter {
      * @param station station to be redistributed
      */
     public void executeStrategyOnStation(Station station) throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
+        displayer.displayRedistributionInit(station);
         this.strategy.reallocation(stations.keySet(), station);
+        displayer.displayRedistributionEnd(station);
     }
 
     /**
@@ -99,12 +103,13 @@ public class ControlCenter implements SubscribeControlCenter {
         try {
             List<Station> stationRedistibutionAvailable = this.stationToRedistribute.stream().filter(t -> t.getTime().intervalNoModifSupEqHas(2)).toList();
             while (!stationRedistibutionAvailable.isEmpty()) {
-                this.executeStrategyOnStation(stationRedistibutionAvailable.getFirst());
+                Station s = stationRedistibutionAvailable.getFirst();
+                this.executeStrategyOnStation(s);
                 stationRedistibutionAvailable = this.stationToRedistribute.stream().filter(t -> t.getTime().intervalNoModifSupEqHas(2)).toList();
             }
         }
         catch (Exception e){
-            System.out.println("Grave erreur");
+            displayer.displayExeption(e.getMessage());
         }
     }
 
@@ -183,9 +188,9 @@ public class ControlCenter implements SubscribeControlCenter {
             Vehicle vehicle = vehicleFilterCondition(vehicleVisitor);
             vehicleVisitor.visit(vehicle);
         } catch (NullPointerException e) {
-            System.out.println(e);
+
         } catch (Exception e) {
-            System.out.println(e);
+            displayer.displayExeption(e.getMessage());
         }
     }
 
@@ -203,7 +208,7 @@ public class ControlCenter implements SubscribeControlCenter {
                 return vehicle;
             };
         }
-        throw new NullPointerException();
+        throw new NullPointerException("No vehicle correspond to the filter");
     }
 
 
@@ -217,10 +222,10 @@ public class ControlCenter implements SubscribeControlCenter {
             v.visit(station);
         }
         catch (NullPointerException e){
-            System.out.println(e);
+
         }
         catch (Exception e){
-            System.out.println(e);
+            displayer.displayExeption(e.getMessage());
         }
     }
 
