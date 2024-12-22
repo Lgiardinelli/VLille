@@ -45,6 +45,8 @@ mvn test
 ```bash
 jar cvfe joly-giardinelli-coo.jar Main -C target/classes .
 ```
+Nous n'avons pas pu exécuter le JAR en raison d'une incompatibilité avec la version de Java.  
+Cependant, l'exécution via la commande Maven mentionnée ci-dessus fonctionne correctement en cas de besoin.
 ```bash
 java -jar joly-giardinelli-coo.jar
 ```
