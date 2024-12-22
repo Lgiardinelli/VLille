@@ -95,7 +95,7 @@ class RepairTest {
         v1.toHS();
         controlCenter.executeEventVehicle(repair);
         assertTrue(repair.getTime().getInterValeNoModif() == 0);
-        repair.updateTime();
+        this.repair.getTime().addOneInterValeNoModif();
         assertTrue(repair.getTime().getInterValeNoModif() == 1);
     }
 
@@ -103,10 +103,11 @@ class RepairTest {
     public void updateTimeTestTwoTime() {
         v1.toHS();
         controlCenter.executeEventVehicle(repair);
-        assertTrue(repair.getTime().getInterValeNoModif() == 0);
-        repair.updateTime();
-        repair.updateTime();
-        assertTrue(repair.getTime().getInterValeNoModif() == 0);
+        assertEquals(0, repair.getTime().getInterValeNoModif());
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.updateTime();
+        assertEquals(0, repair.getTime().getInterValeNoModif());
     }
 
     @Test
@@ -114,8 +115,9 @@ class RepairTest {
         v1.toHS();
         controlCenter.executeEventVehicle(repair);
         assertFalse(controlCenter.getVehicles().contains(v1));
-        repair.updateTime();
-        repair.updateTime();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.updateTime();
         assertTrue(controlCenter.getVehicles().contains(v1));
     }
 
@@ -124,8 +126,9 @@ class RepairTest {
         v1.toHS();
         controlCenter.executeEventVehicle(repair);
         assertTrue(v1.getState().getClass() == HS.class);
-        repair.updateTime();
-        repair.updateTime();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.updateTime();
         assertTrue(v1.getState().getClass() == Service.class);
     }
 
@@ -134,8 +137,9 @@ class RepairTest {
         v1.toHS();
         controlCenter.executeEventVehicle(repair);
         assertTrue(repair.getVehicle() == v1);
-        repair.updateTime();
-        repair.updateTime();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.getTime().addOneInterValeNoModif();
+        this.repair.updateTime();
         assertTrue(repair.getVehicle() == null);
     }
 

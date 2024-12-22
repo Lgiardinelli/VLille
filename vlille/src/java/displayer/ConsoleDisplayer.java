@@ -100,7 +100,7 @@ public class ConsoleDisplayer implements DisplayerInterface{
     @Override
     public void displayStationVisitor(StationVisitor visitor,Station station) {
         System.out.println("---------------------------------------------------------------");
-        System.out.printf("%s as do is action on Station, id : %d\n",visitor.getClass(),station.getId());
+        System.out.printf("%s as do is action on Station, id : %d\n",visitor.getClass().getSimpleName(),station.getId());
         System.out.println("---------------------------------------------------------------");
     }
 
@@ -148,7 +148,7 @@ public class ConsoleDisplayer implements DisplayerInterface{
     @Override
     public void displayVehicleVisitor(VehicleVisitor visitor,Vehicle vehicle) {
         System.out.println("---------------------------------------------------------------");
-        System.out.printf("%s as do is action on %s, id : %d\n",visitor.getClass(),vehicle.decorateEquipment(),vehicle.getId());
+        System.out.printf("%s as do is action on %s, id : %d\n",visitor.getClass().getSimpleName(),vehicle.decorateEquipment(),vehicle.getId());
         System.out.println("---------------------------------------------------------------");
     }
 }

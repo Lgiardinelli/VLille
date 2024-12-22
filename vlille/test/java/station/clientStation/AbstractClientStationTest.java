@@ -4,6 +4,7 @@ import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.Station;
+import vehicle.MockVehicle;
 import vehicle.Vehicle;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,5 +36,9 @@ public abstract class AbstractClientStationTest {
         Station s = new Station();
         Vehicle vehicle = this.abstractClientStation.visit(s);
         assertEquals(vehicle, null);
+    }
+    @Test
+    public void testVehicleRightType(){
+        assertFalse(this.abstractClientStation.testMethod().testTypeVehicle(new MockVehicle(8)));
     }
 }

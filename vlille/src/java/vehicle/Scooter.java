@@ -7,6 +7,7 @@ import vehicle.vehicleVisitor.VehicleVisitor;
  */
 public class Scooter extends Vehicle {
 
+    public static final int maxNbTimeRented = 4;
     /**
      * Scooter constructor
      */
@@ -21,7 +22,7 @@ public class Scooter extends Vehicle {
 
     @Override
     protected int nbMaxTimeRented() {
-        return 4;
+        return maxNbTimeRented;
     }
 
     @Override

@@ -20,6 +20,7 @@ abstract class VehicleTest {
     private Vehicle mockVec;
 
     protected abstract Vehicle createVehicle();
+    protected abstract int returnMaxtimerented();
 
     @BeforeEach
     void init() {
@@ -124,4 +125,13 @@ abstract class VehicleTest {
 
     }
 
+    @Test
+    void testDecorate(){
+        assertTrue(this.vehicle.decorateEquipment().contains(this.vehicle.getClass().getSimpleName()));
     }
+
+    @Test
+    void testMaxNbTimeRented() {
+        assertEquals(this.returnMaxtimerented(),this.vehicle.nbMaxTimeRented());
+    }
+}

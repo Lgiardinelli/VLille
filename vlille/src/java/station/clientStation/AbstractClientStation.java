@@ -28,5 +28,5 @@ public abstract class AbstractClientStation {
      * methat which return a TypeVehicleTest
      * @return an object of type TypeVehicleTest which is an anonyme interface
      */
-    protected abstract TypeVehicleTest testMethod();
+    public abstract TypeVehicleTest testMethod();
 }

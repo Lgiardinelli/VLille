@@ -8,7 +8,7 @@ import vehicle.Bike;
 public class BikeVisitor extends AbstractClientStation {
 
     @Override
-    protected TypeVehicleTest testMethod() {
+    public TypeVehicleTest testMethod() {
         return v -> v instanceof Bike;
     }
 

@@ -8,7 +8,7 @@ import vehicle.Overboard;
 public class OverBoardVisitor extends AbstractClientStation {
 
     @Override
-    protected TypeVehicleTest testMethod() {
+    public TypeVehicleTest testMethod() {
         return v -> v instanceof Overboard;
     }
 }

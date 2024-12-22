@@ -9,6 +9,8 @@ public class Bike extends Vehicle {
     /**
      * Bike constructor
      */
+    public static final int maxNbTimeRented = 6;
+
     public Bike(int id) {
         super(id);
     }
@@ -20,7 +22,7 @@ public class Bike extends Vehicle {
 
     @Override
     protected int nbMaxTimeRented() {
-        return 6;
+        return maxNbTimeRented;
     }
 
     @Override

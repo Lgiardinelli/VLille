@@ -10,4 +10,9 @@ class OverboardTest extends VehicleTest {
     protected Vehicle createVehicle() {
         return new Overboard(0);
     }
+
+    @Override
+    protected int returnMaxtimerented() {
+        return Overboard.maxNbTimeRented;
+    }
 }

@@ -9,4 +9,9 @@ class ScooterTest extends VehicleTest {
     protected Vehicle createVehicle() {
         return new Scooter(0);
     }
+
+    @Override
+    protected int returnMaxtimerented() {
+        return Scooter.maxNbTimeRented;
+    }
 }
