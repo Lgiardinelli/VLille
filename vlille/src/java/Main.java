@@ -15,6 +15,7 @@ import station.clientStation.OverBoardVisitor;
 import station.clientStation.ScooterVisitor;
 import station.stationVisitor.Rober;
 import station.stationVisitor.StationVisitor;
+import timeControler.TimeDependencies;
 import vehicle.Overboard;
 import vehicle.Scooter;
 import vehicle.Vehicle;
@@ -41,6 +42,7 @@ public class Main {
     private static Random random = new Random();
     private static DisplayerInterface displayer = new ConsoleDisplayer();
     private static List<AbstractClientStation> clientStations = new ArrayList<>();
+    private static List<TimeDependencies> timeDependencies = new ArrayList<>();
 
     private static void roundDropOff() throws StationFullException {
         if(!rentedVec.isEmpty()){
@@ -93,10 +95,12 @@ public class Main {
     }
 
     private static void roundUpdate(){
-        /**
-         * Augmenter temps de tout ce qui dépend du temps +1, refresh list, (station et repareur), creer et remplir ici
-         * Update time de toutes les stations
-         */
+        timeDependencies.forEach(t -> t.getTime().addOneInterValeNoModif());
+        timeDependencies.forEach(t -> t.updateTime());
+        mainControlCenter.executeStrategyRedistribution();
+        mainControlCenter.executeEventStation(rober);
+        workerVec.forEach(t -> mainControlCenter.executeEventVehicle(t));
+        displayer.displayControlCenter(mainControlCenter);
     }
 
 
@@ -124,7 +128,7 @@ public class Main {
 
 
         //add repairer
-        for(int i=0; i<4;i++){
+        for(int i=0; i<5;i++){
             workerVec.add(new Repair(mainControlCenter));
         }
 
@@ -141,9 +145,16 @@ public class Main {
         clientStations.add(new OverBoardVisitor());
         clientStations.add(new BikeVisitor());
 
+        timeDependencies.addAll(allStation);
+        workerVec.forEach(t -> {
+            if (t instanceof Repair)
+                timeDependencies.add((TimeDependencies) t);
+        });
+        System.out.println(timeDependencies);
+
 
         int nb_tour = 0;
-        while(nb_tour < 100){
+        while(nb_tour < 10) {
             System.out.println();
             System.out.println("Tour n°" + nb_tour);
             displayer.displayControlCenter(mainControlCenter);
