@@ -6,15 +6,21 @@ import exeption.StationFullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import station.MockStationTestNotif;
-import station.MockStationVehcNbTimeRent;
+import station.MockStationTestRandom;
 import station.Station;
 import station.stateStation.Empty;
 import station.stateStation.Full;
 import vehicle.Bike;
+import vehicle.Overboard;
+import vehicle.Scooter;
 import vehicle.Vehicle;
+import vehicle.vehicleVisitor.Repair;
+import vehicle.vehicleVisitor.VehicleVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControlCenterTest {
@@ -22,6 +28,8 @@ class ControlCenterTest {
     private Station station;
     private ControlCenter controlCenter;
     private Bike bike;
+    private Scooter scooter;
+    private Overboard overboard;
 
     @BeforeEach
     void setUp() {
@@ -31,6 +39,8 @@ class ControlCenterTest {
         this.controlCenter = new ControlCenter(t);
         this.station.addSubscriber(controlCenter);
         this.bike = new Bike(0);
+        this.scooter = new Scooter(0);
+        this.overboard = new Overboard(0);
     }
 
     @Test
@@ -63,6 +73,8 @@ class ControlCenterTest {
         assertEquals(0, nb_v - this.station.getVehicles().size());
         station.rentVehicle(t -> t instanceof Vehicle);
         assertEquals(nb_v - 1, controlCenter.getNbVehicleStation(station));
+        assertThrows(NoSuchElementException.class, () -> station.rentVehicle(t -> t instanceof Vehicle));
+        assertEquals(nb_v - 1, controlCenter.getNbVehicleStation(station));
 
         //if the station not in the map
         int nb_vehicle_station = test.getVehicles().size();
@@ -70,10 +82,23 @@ class ControlCenterTest {
         test.rentVehicle(t -> t instanceof Vehicle);
         assertTrue(controlCenter.getStations().containsKey(test));
         assertEquals(controlCenter.getNbVehicleStation(test), nb_vehicle_station - 1);
+        assertThrows(NoSuchElementException.class, () -> test.rentVehicle(t -> t instanceof Vehicle));
+        assertEquals(controlCenter.getNbVehicleStation(test), nb_vehicle_station - 1);
     }
 
     //TODO faire test KO pour les deux précédent test
+    @Test
+    void notifyStationVehicleAddedTestKo() throws Exception {
+        Station test = new MockStationTestRandom();
+        test.addSubscriber(controlCenter);
+        test.dropOffVehicle(bike);
+        test.dropOffVehicle(scooter);
 
+        int nb_v = this.controlCenter.getNbVehicleStation(test);
+        assertEquals(0, nb_v - test.getVehicles().size());
+        assertThrows(StationFullException.class, () -> test.dropOffVehicle(overboard));
+        assertEquals(0, nb_v - test.getVehicles().size());
+    }
 
     @Test
     void testNotifyWhenStationIsFullEmpty() throws StationFullException, StationEmptyException, NoVehicleOfThisTypeAvailableException {
@@ -95,5 +120,20 @@ class ControlCenterTest {
         this.station.rentVehicle(v -> v instanceof Vehicle);
         assertInstanceOf(Empty.class, this.station.getStateStation());
         assertTrue(this.controlCenter.getStationToRedistribute().contains(this.station));
+    }
+
+    @Test
+    void testExecuteEventVehicleKo() throws StationFullException {
+        // L'exception n'est pas levé car elle est géré avec un catch
+        Station station1 = new Station();
+        station1.addSubscriber(controlCenter);
+        station1.dropOffVehicle(bike);
+        station1.dropOffVehicle(overboard);
+        Repair repair = new Repair(controlCenter);
+        controlCenter.executeEventVehicle(repair);
+        overboard.toHS();
+        controlCenter.executeEventVehicle(repair);
+        bike.toHS();
+        controlCenter.executeEventVehicle(repair);
     }
 }
